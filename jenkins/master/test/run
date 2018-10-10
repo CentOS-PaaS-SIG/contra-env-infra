@@ -99,7 +99,7 @@ test_connection() {
   local attempt=1
   local result=1
   response_code=000
-  while [ $attempt -le $max_attempts ] && [ $response_code -ne 403 ]; do
+  while [ $attempt -le $max_attempts ]; do
     echo "Sending GET request to http://localhost:$(container_port)/"
     response_code=$(curl -s -w %{http_code} -o /dev/null http://localhost:$(container_port)/)
     status=$?
