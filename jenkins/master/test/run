@@ -25,6 +25,7 @@ test_dir="$($READLINK_EXEC -zf $(dirname "${BASH_SOURCE[0]}"))"
 image_dir=$($READLINK_EXEC -zf ${test_dir}/..)
 cid_file=$($MKTEMP_EXEC -u --suffix=.cid)
 DOCKER_IMAGE=false
+test_port=8080
 
 s2i_args="--pull-policy=never --loglevel=2"
 
@@ -50,7 +51,6 @@ prepare() {
 run_s2i_build() {
   docker info > /dev/null 2>&1
   if [ $? == 0 ]; then
-    buildah rmi ${IMAGE_NAME}
     docker build -t ${IMAGE_NAME} .
     s2i build --incremental=true ${s2i_args} file://${test_dir}/test-app ${IMAGE_NAME} ${IMAGE_NAME}-testapp
     IMAGE_NAME=${IMAGE_NAME}-testapp
@@ -62,16 +62,11 @@ run_s2i_build() {
 
 }
 
-create_test_container() {
-  echo "creating test container"
-  #buildah from --name ${CONTAINER_NAME} docker-daemon:${IMAGE_NAME}:latest
-}
-
 run_test_application() {
   if [ DOCKER_IMAGE ]; then
-    podman run docker-daemon:${IMAGE_NAME}:latest -- echo testing...
+    podman run --name ${CONTAINER_NAME} -P --cidfile $cid_file docker-daemon:${IMAGE_NAME}:latest
   else 
-    podman run ${IMAGE_NAME}:latest -- echo testing...
+    podman run --name ${CONTAINER_NAME} -P --cidfile $cid_file ${IMAGE_NAME}:latest
   fi
 
 }
@@ -89,20 +84,28 @@ wait_for_cid() {
   done
 }
 
+container_ip() {
+  podman inspect --format="{{ .NetworkSettings.IPAddress }}" "$(cat "${cid_file}")"
+}
+
+container_port() {
+  podman port "$(cat "${cid_file}")" |grep 8080/tcp |awk -F ':' '{print $2}'
+}
+
 test_connection() {
-  echo "Testing HTTP connection (http://$(container_ip):$(container_port))"
-  local max_attempts=10
-  local sleep_time=1
+  echo "Testing HTTP connection (http://localhost:$(container_port))"
+  local max_attempts=60
+  local sleep_time=2
   local attempt=1
   local result=1
-  while [ $attempt -le $max_attempts ]; do
-    echo "Sending GET request to http://$(container_ip):$(container_port)/"
-    response_code=$(curl -s -w %{http_code} -o /dev/null http://$(container_ip):$(container_port)/)
+  response_code=000
+  while [ $attempt -le $max_attempts ] && [ $response_code -ne 403 ]; do
+    echo "Sending GET request to http://localhost:$(container_port)/"
+    response_code=$(curl -s -w %{http_code} -o /dev/null http://localhost:$(container_port)/)
     status=$?
-    if [ $status -eq 0 ]; then
-      if [ $response_code -eq 200 ]; then
-        result=0
-      fi
+    if [ $response_code -eq 403 ] || [ $response_code -eq 200 ]; then
+      result=0
+      echo breaking
       break
     fi
     attempt=$(( $attempt + 1 ))
@@ -113,9 +116,9 @@ test_connection() {
 
 
 cleanup() {
-  if image_exists ${CONTAINER_NAME}; then
-    buildah rm ${CONTAINER_NAME}
-    buildah rmi ${IMAGE_NAME}
+  if image_exists ${IMAGE_NAME}; then
+    podman rm --force ${CONTAINER_NAME}
+    buildah rmi --force ${IMAGE_NAME}
   fi
 }
 
@@ -128,15 +131,22 @@ check_result() {
   fi
 }
 
+trap cleanup EXIT SIGHUP SIGINT SIGTERM
+
 prepare
 
+echo "creating s2i build"
 run_s2i_build
 
-create_test_container 
-
+echo "running test application"
 run_test_application &
 
-check_result $?
+echo "wait for cid file"
+wait_for_cid
 
-cleanup
+if [ ! -z $test_port ]; then
+  echo "testing network connection"
+  test_connection
+  check_result $?
+fi
 
