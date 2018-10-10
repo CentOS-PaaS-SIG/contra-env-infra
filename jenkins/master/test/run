@@ -24,6 +24,7 @@ fi
 test_dir="$($READLINK_EXEC -zf $(dirname "${BASH_SOURCE[0]}"))"
 image_dir=$($READLINK_EXEC -zf ${test_dir}/..)
 cid_file=$($MKTEMP_EXEC -u --suffix=.cid)
+DOCKER_IMAGE=false
 
 s2i_args="--pull-policy=never --loglevel=2"
 
@@ -53,6 +54,7 @@ run_s2i_build() {
     docker build -t ${IMAGE_NAME} .
     s2i build --incremental=true ${s2i_args} file://${test_dir}/test-app ${IMAGE_NAME} ${IMAGE_NAME}-testapp
     IMAGE_NAME=${IMAGE_NAME}-testapp
+    DOCKER_IMAGE=true
     echo "docker is running"
   else
     echo "docker is not running"
@@ -62,12 +64,53 @@ run_s2i_build() {
 
 create_test_container() {
   echo "creating test container"
-  buildah from --name ${CONTAINER_NAME} docker-daemon:${IMAGE_NAME}:latest
+  #buildah from --name ${CONTAINER_NAME} docker-daemon:${IMAGE_NAME}:latest
 }
 
 run_test_application() {
-  buildah run --runtime-flag debug ${CONTAINER_NAME} -- echo testing...
+  if [ DOCKER_IMAGE ]; then
+    podman run docker-daemon:${IMAGE_NAME}:latest -- echo testing...
+  else 
+    podman run ${IMAGE_NAME}:latest -- echo testing...
+  fi
+
 }
+
+wait_for_cid() {
+  local max_attempts=10
+  local sleep_time=1
+  local attempt=1
+  local result=1
+  while [ $attempt -le $max_attempts ]; do
+    [ -f $cid_file ] && break
+    echo "Waiting for container to start..."
+    attempt=$(( $attempt + 1 ))
+    sleep $sleep_time
+  done
+}
+
+test_connection() {
+  echo "Testing HTTP connection (http://$(container_ip):$(container_port))"
+  local max_attempts=10
+  local sleep_time=1
+  local attempt=1
+  local result=1
+  while [ $attempt -le $max_attempts ]; do
+    echo "Sending GET request to http://$(container_ip):$(container_port)/"
+    response_code=$(curl -s -w %{http_code} -o /dev/null http://$(container_ip):$(container_port)/)
+    status=$?
+    if [ $status -eq 0 ]; then
+      if [ $response_code -eq 200 ]; then
+        result=0
+      fi
+      break
+    fi
+    attempt=$(( $attempt + 1 ))
+    sleep $sleep_time
+  done
+  return $result
+}
+
 
 cleanup() {
   if image_exists ${CONTAINER_NAME}; then
@@ -91,7 +134,7 @@ run_s2i_build
 
 create_test_container 
 
-run_test_application
+run_test_application &
 
 check_result $?
 
