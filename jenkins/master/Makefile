@@ -1,6 +1,6 @@
 
 IMAGE_NAME = jenkins
-CONTAINER_NAME = $(IMAGE_NAME)-testapp
+CONTAINER_NAME = $(IMAGE_NAME)-test
 
 .PHONY: build
 build:
@@ -10,3 +10,4 @@ build:
 test:
 	buildah bud -t $(IMAGE_NAME)-candidate .
 	IMAGE_NAME=$(IMAGE_NAME)-candidate CONTAINER_NAME=$(CONTAINER_NAME) test/run
+

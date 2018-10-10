@@ -1,4 +1,6 @@
 #!/bin/bash
+
+set -x
 #
 # The 'run' performs a simple test that verifies the S2I image.
 # The main focus here is to exercise the S2I scripts.
@@ -23,8 +25,7 @@ test_dir="$($READLINK_EXEC -zf $(dirname "${BASH_SOURCE[0]}"))"
 image_dir=$($READLINK_EXEC -zf ${test_dir}/..)
 cid_file=$($MKTEMP_EXEC -u --suffix=.cid)
 
-# Port the image exposes service to be tested
-test_port=8080
+s2i_args="--pull-policy=never --loglevel=2"
 
 image_exists() {
   buildah inspect $1 &>/dev/null
@@ -43,27 +44,35 @@ prepare() {
   git add -A && git commit -m "Sample commit"
   popd >/dev/null
 
-  create_container
+}
+
+run_s2i_build() {
+  docker info > /dev/null 2>&1
+  if [ $? == 0 ]; then
+    buildah rmi ${IMAGE_NAME}
+    docker build -t ${IMAGE_NAME} .
+    s2i build --incremental=true ${s2i_args} file://${test_dir}/test-app ${IMAGE_NAME} ${IMAGE_NAME}-testapp
+    IMAGE_NAME=${IMAGE_NAME}-testapp
+    echo "docker is running"
+  else
+    echo "docker is not running"
+  fi  
 
 }
 
-create_container() {
-  buildah from --name ${CONTAINER_NAME} ${IMAGE_NAME}
-  buildah copy --chown 1001:0 ${CONTAINER_NAME} test/test-app/run /tmp/run-test
-  buildah commit ${CONTAINER_NAME} ${IMAGE_NAME}-test
-  buildah from --name ${CONTAINER_NAME}-test ${IMAGE_NAME}-test
+create_test_container() {
+  echo "creating test container"
+  buildah from --name ${CONTAINER_NAME} docker-daemon:${IMAGE_NAME}:latest
 }
 
 run_test_application() {
-  buildah run --runtime-flag debug ${CONTAINER_NAME}-test /tmp/run-test
+  buildah run --runtime-flag debug ${CONTAINER_NAME} -- echo testing...
 }
 
 cleanup() {
   if image_exists ${CONTAINER_NAME}; then
     buildah rm ${CONTAINER_NAME}
     buildah rmi ${IMAGE_NAME}
-    buildah rm ${CONTAINER_NAME}-test
-    buildah rmi ${IMAGE_NAME}-test
   fi
 }
 
@@ -76,11 +85,15 @@ check_result() {
   fi
 }
 
-# Build the application image twice to ensure the 'save-artifacts' and
-# 'restore-artifacts' scripts are working properly
 prepare
 
+run_s2i_build
+
+create_test_container 
+
 run_test_application
+
+check_result $?
 
 cleanup
 
