@@ -252,13 +252,13 @@ parameters:
 - description: Git source URI for Jenkins S2I
   name: REPO_URL
   required: true
-  value: https://github.com/CentOS-PaaS-SIG/contra-env-sample-project
+  value: https://github.com/CentOS-PaaS-SIG/contra-env-infra
 - description: Git branch/tag reference
   name: REPO_REF
   value: master
 - description: Path within Git project to build; empty for root project directory.
   name: CONTEXT_DIR
-  value: config/s2i/jenkins/master
+  value: jenkins/master
 - name: JENKINS_SERVICE_NAME
   displayName: Jenkins Service Name
   description: The name of the OpenShift Service exposed for the Jenkins container.
@@ -275,11 +275,11 @@ parameters:
 - name: MEMORY_LIMIT
   displayName: Memory Limit
   description: Maximum amount of memory the container can use.
-  value: 512Mi
+  value: 1024Mi
 - name: VOLUME_CAPACITY
   displayName: Volume Capacity
   description: Volume space available for data, e.g. 512Mi, 2Gi.
-  value: 1Gi
+  value: 10Gi
   required: true
 - name: NAMESPACE
   displayName: Jenkins ImageStream Namespace
