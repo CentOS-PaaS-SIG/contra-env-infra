@@ -25,11 +25,13 @@ RUN /usr/bin/fix-permissions /var/log/grafana && \
     /usr/bin/fix-permissions /etc/grafana && \
     /usr/bin/fix-permissions /usr/share/grafana && \
     /usr/bin/fix-permissions /usr/sbin/grafana-server && \
-    /usr/bin/fix-permissions /var/lib/grafana && \
     chown -R 1001:0 /var/log/grafana && \
     chown -R 1001:0 /etc/grafana && \
     chown -R 1001:0 /usr/share/grafana && \
-    chown -R 1001:0 /usr/sbin/grafana-server
+    chown -R 1001:0 /usr/sbin/grafana-server && \
+    chmod g+s /var/log/grafana && \
+    chmod g+s /etc/grafana && \
+    chmod g+s /usr/share/grafana
 
 VOLUME ["/var/lib/grafana", "/var/log/grafana", "/etc/grafana"]
 
