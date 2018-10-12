@@ -15,8 +15,9 @@ function generate_passwd_file() {
 
 generate_passwd_file
 
-if [ $INIT_DATASOURCE ]; then
-    curl -X POST -d @/usr/share/grafana/ --header "Content-Type: application/json" \
+if [ $INFLUXDB_DATASOURCE ]; then
+    source /usr/share/grafana/scripts/datasources.sh
+    curl -X POST -d @"$(influxdb_json)" --header "Content-Type: application/json" \
         http://${GF_SECURITY_ADMIN_USER}:${GF_SECURITY_ADMIN_PASSWORD}@localhost:3000/api/datasources
 fi
 

@@ -37,6 +37,14 @@ parameters:
   value: contra-sample-project
 - name: GF_AUTH_ANONYMOUS_ENABLED
   value: "true"
+- name: INFLUXDB_DATASOURCE
+  value: true
+- name: INFLUXDB_URL
+  value: https://influxdb-continuous-infra.apps.ci.centos.org
+- name: INFLUXDB_PASSWORD
+  value: ''
+- name: INFLUXDB_USER
+  value: contra
 objects:
 - apiVersion: v1
   kind: ImageStream
@@ -164,6 +172,14 @@ objects:
             value: "Main Org."
           - name: GF_AUTH_ANONYMOUS_ORG_ROLE
             value: Viewer
+          - name: INFLUXDB_URL
+            value: ${INFLUXDB_URL}
+          - name: INFLUXDB_USER
+            value: ${INFLUXDB_USER}
+          - name: INFLUXDB_PASSWORD
+            value: ${INFLUXDB_PASSWORD}
+          - name: INFLUXDB_DATASOURCE
+            value: ${INFLUXDB_DATASOURCE}
           image: grafana:stable
           imagePullPolicy: Always
           name: grafana
