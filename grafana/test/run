@@ -52,7 +52,7 @@ run_s2i_build() {
   docker info > /dev/null 2>&1
   if [ $? == 0 ]; then
     docker build -t ${IMAGE_NAME} .
-    s2i build --incremental=true ${s2i_args} file://${test_dir}/test-app ${IMAGE_NAME} ${IMAGE_NAME}-testapp
+    s2i build --incremental=true ${s2i_args} -E "${test_dir}/test/environment" file://${test_dir}/test-app ${IMAGE_NAME} ${IMAGE_NAME}-testapp
 
     result=$?
     if [ $result != 0 ]; then

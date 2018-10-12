@@ -24,7 +24,8 @@ COPY ./usr/share/grafana/ /usr/share/grafana
 RUN /usr/bin/fix-permissions /var/log/grafana && \
     /usr/bin/fix-permissions /etc/grafana && \
     /usr/bin/fix-permissions /usr/share/grafana && \
-    /usr/bin/fix-permissions /usr/sbin/grafana-server \
+    /usr/bin/fix-permissions /usr/sbin/grafana-server && \
+    /usr/bin/fix-permissions /var/lib/grafana && \
     chown -R 1001:0 /var/log/grafana && \
     chown -R 1001:0 /etc/grafana && \
     chown -R 1001:0 /usr/share/grafana && \

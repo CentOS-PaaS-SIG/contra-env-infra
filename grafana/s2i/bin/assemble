@@ -15,7 +15,3 @@ if [ -d ${GRAFANA_INSTALL_DIR}/usr/share/grafana ]; then
     cp -rp ${GRAFANA_INSTALL_DIR}/usr/share/grafana/* /usr/share/grafana/
 fi
 
-if [ -d /var/lib/grafana ]; then
-    /usr/bin/fix-permissions /var/lib/grafana
-fi
-
