@@ -37,7 +37,7 @@ parameters:
   value: contra-sample-project
 - name: GF_AUTH_ANONYMOUS_ENABLED
   value: "true"
-- name: INFLUXDB_DATASOURCE
+- name: INIT_DATASOURCE
   value: "true"
 - name: INFLUXDB_URL
   value: "https://influxdb-continuous-infra.apps.ci.centos.org"
@@ -178,8 +178,8 @@ objects:
             value: "${INFLUXDB_USER}"
           - name: INFLUXDB_PASSWORD
             value: "${INFLUXDB_PASSWORD}"
-          - name: INFLUXDB_DATASOURCE
-            value: "${INFLUXDB_DATASOURCE}"
+          - name: INIT_DATASOURCE
+            value: "${INIT_DATASOURCE}"
           image: grafana:stable
           imagePullPolicy: Always
           name: grafana

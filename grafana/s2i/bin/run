@@ -15,13 +15,14 @@ function generate_passwd_file() {
 
 generate_passwd_file
 
-#if [ $INFLUXDB_DATASOURCE == "true" ]; then
-#    source /usr/share/grafana/scripts/datasources.sh
-#    curl -X POST --data "$(influxdb_json)" --header "Content-Type: application/json" \
-#        http://${GF_SECURITY_ADMIN_USER}:${GF_SECURITY_ADMIN_PASSWORD}@localhost:3000/api/datasources
-#fi
+if [ $INIT_DATASOURCE == "true" ]; then
+    source /usr/share/grafana/scripts/datasources.sh
+    echo "$(influxdb_ds)" > /usr/share/grafana/conf/provisioning/datasources/datasource.yml
+    /usr/bin/fix-permissions /usr/share/grafana/conf/provisioning/datasources/datasource.yml
+fi
 
 exec /usr/sbin/grafana-server                   \
   --homepath=/usr/share/grafana                 \
   --config=/etc/grafana/grafana.ini             \
   "$@"
+
