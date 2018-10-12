@@ -18,14 +18,17 @@ parameters:
   value: 5Gi
   description: The size of the persistent storage for Grafana
 - name: REPO_URL
-  description: The repo url that contains the source. example: https://github.com/CentOS-PaaS-SIG/ci-pipeline.git
+  description: The repo url that contains the source. e.g. https://github.com/CentOS-PaaS-SIG/ci-pipeline.git
   required: true
 - name: REPO_CONTEXTDIR
-  description: The sub-directory inside the repository. example: config/Dockerfiles/grafana
+  description: The sub-directory inside the repository. e.g. config/Dockerfiles/grafana
   required: true
 - name: REPO_REF
   description: The git ref or tag to use for customization.
   value: master
+  required: true
+- name: ADMIN_PASSWORD
+  description: Password for the admin user
   required: true
 - name: GRAFANA_INSTALL
   value: grafana-5.2.3-1.x86_64.rpm
@@ -148,9 +151,11 @@ objects:
           - name: GF_SECURITY_ADMIN_USER
             value: root
           - name: GF_SECURITY_ADMIN_PASSWORD
-            value: secret
+            value: "${ADMIN_PASSWORD}"
           - name: GF_PATHS_PLUGINS
             value: /var/lib/grafana/plugins
+          - name: GF_PATHS_DATA
+            value: /var/lib/grafana/data
           - name: GF_USERS_ALLOW_SIGN_UP
             value: "true"
           - name: GF_AUTH_ANONYMOUS_ENABLED
