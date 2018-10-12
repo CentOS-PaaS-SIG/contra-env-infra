@@ -18,14 +18,15 @@ parameters:
   value: 5Gi
   description: The size of the persistent storage for Grafana
 - name: REPO_URL
-  value: https://github.com/CentOS-PaaS-SIG/ci-pipeline.git
-  description: The dockerfile repo url
+  description: The repo url that contains the source. example: https://github.com/CentOS-PaaS-SIG/ci-pipeline.git
+  required: true
 - name: REPO_CONTEXTDIR
-  description: The sub-directory inside the repository.
-  value: config/Dockerfiles/grafana
+  description: The sub-directory inside the repository. example: config/Dockerfiles/grafana
+  required: true
 - name: REPO_REF
   description: The git ref or tag to use for customization.
   value: master
+  required: true
 - name: GRAFANA_INSTALL
   value: grafana-5.2.3-1.x86_64.rpm
   description: The grafana rpm
