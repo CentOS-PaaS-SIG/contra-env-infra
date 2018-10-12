@@ -66,11 +66,14 @@ objects:
         uri: ${REPO_URL}
       type: Git
     strategy:
-      dockerStrategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: docker.io/openshift/influxdb:latest
         env:
           - name: INFLUXDB_BINARY
             value: ${INFLUXDB_BINARY}
-      type: Docker
+      type: Source
     triggers:
     - type: ConfigChange
 - kind: PersistentVolumeClaim
