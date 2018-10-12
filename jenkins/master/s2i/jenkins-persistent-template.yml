@@ -75,7 +75,7 @@ objects:
       sourceStrategy:
         from:
           kind: DockerImage
-          name: docker.io/openshift/jenkins-2-centos7:v3.11
+          name: docker.io/contrainfra/jenkins:latest
         env:
           - name: GIT_SSL_NO_VERIFY
             value: 'true'
@@ -249,10 +249,9 @@ objects:
     type: ClusterIP
     sessionAffinity: None
 parameters:
-- description: Git source URI for Jenkins S2I
+- description: Git source URI for Jenkins S2I. E.g. https://github.com/CentOS-PaaS-SIG/contra-env-infra
   name: REPO_URL
   required: true
-  value: https://github.com/CentOS-PaaS-SIG/contra-env-infra
 - description: Git branch/tag reference
   name: REPO_REF
   value: master
