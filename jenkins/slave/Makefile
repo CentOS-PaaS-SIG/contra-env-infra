@@ -1,0 +1,12 @@
+
+IMAGE_NAME = jenkins-slave
+
+.PHONY: build
+build:
+	buildah bud -t $(IMAGE_NAME) .
+
+.PHONY: test
+test:
+	buildah bud -t $(IMAGE_NAME)-candidate .
+	IMAGE_NAME=$(IMAGE_NAME)-candidate test/run
+

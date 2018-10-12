@@ -1,0 +1,17 @@
+#!/bin/bash
+
+
+GRAFANA_INSTALL_DIR=$(mktemp -d --suffix=grafana)
+
+shopt -s dotglob
+
+echo "---> Copying repository files ..."
+
+cp -Rf /tmp/src/. ${GRAFANA_INSTALL_DIR}
+
+if [ -d ${GRAFANA_INSTALL_DIR}/usr/share/grafana ]; then
+    echo "copying over files from /usr/share/grafana..."
+    /usr/bin/fix-permissions ${GRAFANA_INSTALL_DIR}/usr/share/grafana
+    cp -rp ${GRAFANA_INSTALL_DIR}/usr/share/grafana/* /usr/share/grafana/
+fi
+

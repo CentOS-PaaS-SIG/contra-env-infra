@@ -1,0 +1,28 @@
+#!/bin/bash
+
+
+# Generate passwd file based on current uid
+function generate_passwd_file() {
+  USER_ID=$(id -u)
+  GROUP_ID=$(id -g)
+
+  if [ x"$USER_ID" != x"0" ]; then
+
+    echo "default:x:${USER_ID}:${GROUP_ID}:Default Application User:${HOME}:/sbin/nologin" >> /etc/passwd
+
+  fi
+}
+
+generate_passwd_file
+
+if [ $INIT_DATASOURCE == "true" ]; then
+    source /usr/share/grafana/scripts/datasources.sh
+    echo "$(influxdb_ds)" > /usr/share/grafana/conf/provisioning/datasources/datasource.yml
+    /usr/bin/fix-permissions /usr/share/grafana/conf/provisioning/datasources/datasource.yml
+fi
+
+exec /usr/sbin/grafana-server                   \
+  --homepath=/usr/share/grafana                 \
+  --config=/etc/grafana/grafana.ini             \
+  "$@"
+
