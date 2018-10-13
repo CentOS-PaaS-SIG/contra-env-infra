@@ -5,6 +5,7 @@ import hudson.security.*
 import jenkins.model.*
 import jenkins.security.s2m.*
 import java.util.logging.Logger
+import jenkinsci.plugins.influxdb.models.Target
 
 
 def logger = Logger.getLogger("")
