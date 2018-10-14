@@ -15,3 +15,10 @@ if [ -d ${GRAFANA_INSTALL_DIR}/usr/share/grafana ]; then
     cp -rp ${GRAFANA_INSTALL_DIR}/usr/share/grafana/* /usr/share/grafana/
 fi
 
+if [ $INIT_DATASOURCE == "true" ]; then
+    source /usr/share/grafana/scripts/datasources.sh
+    echo "$(influxdb_ds)" > /usr/share/grafana/conf/provisioning/datasources/datasource.yml
+    /usr/bin/fix-permissions /usr/share/grafana/conf/provisioning/datasources/datasource.yml
+fi
+
+
