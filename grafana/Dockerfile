@@ -1,7 +1,7 @@
 FROM centos:7
 
 ENV USERNAME=grafana
-ENV GRAFANA_RPM=${GRAFANA_INSTALL:-grafana-5.2.3-1.x86_64.rpm}
+ENV GRAFANA_RPM=${GRAFANA_INSTALL:-grafana-5.3.0-1.x86_64.rpm}
 
 LABEL k8s.io.description="Grafana dashboard" \
       k8s.io.display-name="Grafana" \
