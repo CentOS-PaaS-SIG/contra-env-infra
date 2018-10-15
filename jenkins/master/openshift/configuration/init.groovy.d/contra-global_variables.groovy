@@ -50,10 +50,14 @@ sharedLibDir.eachFileRecurse (FileType.FILES) { libConfig ->
     String gitUrl = libVals['url']
     GitSCMSource source= new GitSCMSource(libName, gitUrl, null, null, null, false)
     // This refspec stuff likely needs to be investigated further
-    String refSpecs = libVals['refspec']
-    if (refSpecs) {
-        RefSpecsSCMSourceTrait refspecs = new RefSpecsSCMSourceTrait(refSpecs)
-        source.setTraits([refspecs])
+    try {
+        String refSpecs = libVals['refspec']
+        if (refSpecs) {
+            RefSpecsSCMSourceTrait refspecs = new RefSpecsSCMSourceTrait(refSpecs)
+            source.setTraits([refspecs])
+        }
+    } catch(e) {
+        logger.info("No refspec defined for ${libName}")
     }
     LibraryConfiguration lib = new LibraryConfiguration(libName, new SCMSourceRetriever(source))
     lib.implicit = libVals.opt('implicit') ?: false
