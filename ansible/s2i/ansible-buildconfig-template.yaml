@@ -47,11 +47,11 @@ parameters:
 - description: Git repository with Dockerfile and slave entrypoint.
   displayName: Repostory URL
   name: REPO_URL
-  value: https://github.com/CentOS-PaaS-SIG/contra-env-sample-project.git
+  value: https://github.com/CentOS-PaaS-SIG/contra-env-infra.git
 - description: The subdirectory inside the repo, containing the Dockerfile
   displayName: Context Directory
   name: REPO_CONTEXTDIR
-  value: config/dockerfiles/ansible
+  value: ansible
 - description: The git ref or tag to use for customization.
   displayName: Git Reference
   name: REPO_REF

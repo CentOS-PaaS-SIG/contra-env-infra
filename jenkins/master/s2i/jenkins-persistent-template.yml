@@ -251,6 +251,7 @@ objects:
 parameters:
 - description: Git source URI for Jenkins S2I. E.g. https://github.com/CentOS-PaaS-SIG/contra-env-infra
   name: REPO_URL
+  value: https://github.com/CentOS-PaaS-SIG/contra-env-infra.git
   required: true
 - description: Git branch/tag reference
   name: REPO_REF
