@@ -26,6 +26,8 @@ VOLUME /var/lib/influxdb
 
 COPY entrypoint.sh init-influxdb.sh /
 
+USER 1001
+
 ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["/usr/libexec/s2i/run"]
