@@ -71,6 +71,9 @@ pipeline {
 
         }
         stage('grafana') {
+            when {
+                changeset "grafana/**"
+            }
             steps {
                 script {
                     testContainer('grafana')
@@ -79,6 +82,9 @@ pipeline {
 
         }
         stage('influxdb') {
+            when {
+                changeset "influxdb/**"
+            }
             steps {
                 script {
                     testContainer('influxdb')
