@@ -5,7 +5,7 @@ def testContainer(String imageName, String buildRoot=null) {
 
     podTemplate = [containers: containers,
                    docker_repo_url: '172.30.1.1:5000',
-                   openshift_namespace: 'contra-env-sample-project',
+                   openshift_namespace: 'contra-sample-project',
                    podName: 'generic',
                    jenkins_slave_image: 'jenkins-contra-sample-project-slave']
 
