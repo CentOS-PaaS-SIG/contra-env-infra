@@ -28,7 +28,7 @@ def testContainer(String imageName, String buildRoot=null) {
 }
 
 pipeline {
-    agent 'master'
+    agent any
     stages {
         stage('jenkins-master') {
             when {
