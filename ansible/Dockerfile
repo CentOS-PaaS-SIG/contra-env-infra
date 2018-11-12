@@ -30,6 +30,7 @@ RUN dnf install -y ansible \
     chmod -R g=u ${APP_ROOT} /etc/passwd
 
 ### Containers should NOT run as root as a good practice
+# test comment
 USER 10001
 WORKDIR ${APP_ROOT}
 
