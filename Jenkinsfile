@@ -27,6 +27,7 @@ def testContainer(String imageName, String buildRoot=null) {
 
 }
 
+
 pipeline {
     agent any
     stages {
@@ -64,7 +65,23 @@ pipeline {
         stage('ansible-executor') {
             steps {
                 script {
-                    testContainer('ansible')
+                    testContainer('ansible-executor', 'ansible')
+                }
+            }
+
+        }
+        stage('grafana') {
+            steps {
+                script {
+                    testContainer('grafana')
+                }
+            }
+
+        }
+        stage('influxdb') {
+            steps {
+                script {
+                    testContainer('influxdb')
                 }
             }
 
