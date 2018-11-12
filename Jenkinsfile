@@ -64,7 +64,7 @@ pipeline {
         stage('ansible-executor') {
             steps {
                 script {
-                    testContainer('ansible-executor')
+                    testContainer('ansible')
                 }
             }
 
