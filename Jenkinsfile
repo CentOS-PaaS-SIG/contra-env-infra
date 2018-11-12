@@ -3,7 +3,7 @@ def testContainer(String imageName, String buildRoot=null) {
     def credentials = []
     def containers = ['ansible-executor': ['tag': 'latest']]
 
-    podTemplate = [containers: containers,
+    podTemplate = [containersWithProps: containers,
                    docker_repo_url: '172.30.1.1:5000',
                    openshift_namespace: 'contra-sample-project',
                    podName: 'generic',
