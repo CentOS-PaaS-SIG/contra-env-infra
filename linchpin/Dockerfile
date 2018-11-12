@@ -1,29 +1,32 @@
 FROM fedora:28
 
-LABEL name="contrainfra/ansible-executor" \
+LABEL name="contrainfra/linchpin-executor" \
       maintainer="rnester@redhat.com, cmays@redhat.com, ari@redhat.com" \
-      version="0.0.5" \
-      description="A container to run test scripts, set resource configuration, etc."
+      version="0.0.4" \
+      description="A container to set up infrastructure instances"
 
-ENV APP_ROOT=/ansible/
+ENV APP_ROOT=/linchpin/
 ENV PATH=${APP_ROOT}/bin:${PATH} HOME=${APP_ROOT}
+
 
 COPY ansible.cfg /etc/ansible/ansible.cfg
 COPY bin/ ${APP_ROOT}/bin/
 
-RUN dnf install -y ansible \
-        fedpkg \
+RUN dnf install -y git \
+        wget \
+        libffi-devel \
+        openssl-devel \
+        libyaml-devel \
+        gmp-devel \
+        python-devel \
+        gmp-devel \
         libselinux-python \
-        standard-test-roles \
-        python-boto \
-        python-boto3 \
-        python3-boto \
-        python3-boto3 \
-        python2-libcloud \
-        python3-libcloud \
-	python2-virtualenv \
-        rsync && \
+        make \
+        gcc \
+        libxml2-python \
+        libxslt-python && \
     dnf clean all && \
+    pip install git+git://github.com/CentOS-PaaS-SIG/linchpin.git#egg=linchpin[beaker] && \
     mkdir -p ${APP_ROOT} && \
     chmod -R u+x ${APP_ROOT}/bin && \
     chgrp -R 0 ${APP_ROOT} && \
