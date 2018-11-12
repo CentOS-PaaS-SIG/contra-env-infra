@@ -62,9 +62,6 @@ pipeline {
 
         }
         stage('ansible-executor') {
-            when {
-                changeset "ansible/**"
-            }
             steps {
                 script {
                     testContainer('ansible-executor')
