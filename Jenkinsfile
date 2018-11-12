@@ -1,7 +1,7 @@
 def testContainer(String imageName, String buildRoot=null) {
     buildRoot = buildRoot ?: imageName
     def credentials = []
-    def containers = ['ansible-executor']
+    def containers = ['ansible-executor': ['tag': 'latest']]
 
     podTemplate = [containers: containers,
                    docker_repo_url: '172.30.1.1:5000',
