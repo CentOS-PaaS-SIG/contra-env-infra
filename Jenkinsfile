@@ -14,7 +14,8 @@ def testContainer(Map optional = [:], String imageName) {
         }
     }
 
-    def credentials = [usernamePassword(credentialsId: 'continuous-infra-contrainfra-dockercreds',
+    /*
+    def credentials = [usernamePassword(credentialsId: 'continuous-infra-contrainfr-dockercreds',
                         usernameVariable: 'CONTAINER_USERNAME',
                         passwordVariable: 'CONTAINER_PASSWORD')]
 
@@ -26,6 +27,19 @@ def testContainer(Map optional = [:], String imageName) {
                        podName: 'container-builds',
                        jenkins_slave_image: 'jenkins-contra-slave']
 
+*/
+
+    def credentials = [usernamePassword(credentialsId: 'contra-sample-project-dockercreds',
+            usernameVariable: 'CONTAINER_USERNAME',
+            passwordVariable: 'CONTAINER_PASSWORD')]
+
+    def containers = ['container-tools': ['tag': 'latest']]
+
+    def podTemplate = [containersWithProps: containers,
+                       docker_repo_url: '172.30.1.1:5000',
+                       openshift_namespace: 'contra-sample-project',
+                       podName: 'container-builds',
+                       jenkins_slave_image: 'jenkins-contra-sample-project-slave']
 
     deployOpenShiftTemplate(podTemplate) {
         ciPipeline(decorateBuild: decoratePRBuild()) {
