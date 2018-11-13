@@ -1,3 +1,7 @@
+#!groovy
+
+@Library('contra-lib') _
+
 def testContainer(String imageName, String buildRoot=null) {
     buildRoot = buildRoot ?: imageName
     def credentials = [usernamePassword(credentialsId: 'continuous-infra-contrainfra-dockercreds',
