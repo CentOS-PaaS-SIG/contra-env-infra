@@ -18,7 +18,7 @@ def testContainer(String imageName, String buildRoot=null) {
             buildTestContainer(
                     image_name: imageName,
                     build_root: buildRoot,
-                    docker_namespace: 'contrainfra',
+                    container_namespace: 'contrainfra',
                     credentials: credentials,
                     buildContainer: 'ansible-executor',
                     versions: ['latest'])
