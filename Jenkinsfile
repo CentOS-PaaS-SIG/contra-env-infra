@@ -120,8 +120,7 @@ pipeline {
             }
             steps {
                 script {
-
-                    testContainer(version: version, 'grafana')
+                    testContainer('grafana')
                 }
             }
 
