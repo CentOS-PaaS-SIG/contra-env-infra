@@ -7,7 +7,7 @@ def testContainer(String imageName, String buildRoot=null) {
     def credentials = [usernamePassword(credentialsId: 'continuous-infra-contrainfra-dockercreds',
                         usernameVariable: 'CONTAINER_USERNAME',
                         passwordVariable: 'CONTAINER_PASSWORD')]
-    def containers = ['containertools': ['tag': 'latest']]
+    def containers = ['container-tools': ['tag': 'latest']]
 
     podTemplate = [containersWithProps: containers,
                    docker_repo_url: '172.30.254.79:5000',
@@ -24,7 +24,7 @@ def testContainer(String imageName, String buildRoot=null) {
                     build_root: buildRoot,
                     container_namespace: 'contrainfra',
                     credentials: credentials,
-                    buildContainer: 'containertools',
+                    buildContainer: 'container-tools',
                     versions: ['latest'])
 
         }
