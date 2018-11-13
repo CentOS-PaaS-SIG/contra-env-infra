@@ -70,7 +70,7 @@ run_s2i_build() {
 }
 
 run_test_application() {
-  if [ $DOCKER_IMAGE ]; then
+  if $DOCKER_IMAGE; then
     podman run --name ${CONTAINER_NAME} -P --cidfile $cid_file docker-daemon:${IMAGE_NAME}:latest
   else 
     podman run --name ${CONTAINER_NAME} -P --cidfile $cid_file ${IMAGE_NAME}:latest
