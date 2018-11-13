@@ -6,12 +6,12 @@ def testContainer(Map optional = [:], String imageName) {
     def buildRoot = optional.buildRoot ?: imageName
 
     def versions = null
-    if (changeset("grafana/VERSION")) {
-        def version = readFile file: "grafana/VERSION"
-        if (version) {
+    if (env.CHANGE_BRANCH == 'master') {
+        if (changeset("grafana/VERSION")) {
+            def version = readFile file: "grafana/VERSION"
             versions = ['latest', version]
         } else {
-            versions = ['latest']
+            versions = ['lastest']
         }
     }
 
