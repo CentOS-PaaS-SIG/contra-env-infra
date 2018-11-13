@@ -94,7 +94,16 @@ pipeline {
                     testContainer('influxdb')
                 }
             }
-
+        }
+        stage('container-tools') {
+            when {
+                changeset "container-tools/**"
+            }
+            steps {
+                script {
+                    testContainer('container-tools')
+                }
+            }
         }
     }
 }
