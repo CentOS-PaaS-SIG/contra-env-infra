@@ -6,6 +6,17 @@ def testContainer(Map optional = [:], String imageName) {
     def buildRoot = optional.buildRoot ?: imageName
 
     def versions = null
+    if (changeset("grafana/VERSION")) {
+        def version = readFile file: "grafana/VERSION"
+        if (version) {
+            versions = ['latest', version]
+        } else {
+            versions = ['latest']
+        }
+    }
+
+    /*
+    def versions = null
     if (env.CHANGE_BRANCH == 'master') {
         if (optional.version) {
             versions = ['latest', optional.version]
@@ -13,7 +24,7 @@ def testContainer(Map optional = [:], String imageName) {
             versions = ['latest']
         }
     }
-
+*/
     /*
     def credentials = [usernamePassword(credentialsId: 'continuous-infra-contrainfr-dockercreds',
                         usernameVariable: 'CONTAINER_USERNAME',
@@ -109,10 +120,7 @@ pipeline {
             }
             steps {
                 script {
-                    version = null
-                    if (changeset("grafana/VERSION")) {
-                        version = readFile file: "grafana/VERSION"
-                    }
+
                     testContainer(version: version, 'grafana')
                 }
             }
