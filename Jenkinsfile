@@ -2,18 +2,29 @@
 
 @Library('contra-lib') _
 
-def testContainer(String imageName, String buildRoot=null) {
-    buildRoot = buildRoot ?: imageName
+def testContainer(Map optional = [:], String imageName) {
+    def buildRoot = optional.buildRoot ?: imageName
+
+    def versions = null
+    if (env.CHANGE_BRANCH == 'master') {
+        if (optional.version) {
+            versions = ['latest', optional.version]
+        } else {
+            versions = ['latest']
+        }
+    }
+
     def credentials = [usernamePassword(credentialsId: 'continuous-infra-contrainfra-dockercreds',
                         usernameVariable: 'CONTAINER_USERNAME',
                         passwordVariable: 'CONTAINER_PASSWORD')]
+
     def containers = ['container-tools': ['tag': 'latest']]
 
-    podTemplate = [containersWithProps: containers,
-                   docker_repo_url: '172.30.254.79:5000',
-                   openshift_namespace: 'continuous-infra',
-                   podName: 'container-builds',
-                   jenkins_slave_image: 'jenkins-contra-slave']
+    def podTemplate = [containersWithProps: containers,
+                       docker_repo_url: '172.30.254.79:5000',
+                       openshift_namespace: 'continuous-infra',
+                       podName: 'container-builds',
+                       jenkins_slave_image: 'jenkins-contra-slave']
 
 
     deployOpenShiftTemplate(podTemplate) {
@@ -25,7 +36,7 @@ def testContainer(String imageName, String buildRoot=null) {
                     container_namespace: 'contrainfra',
                     credentials: credentials,
                     buildContainer: 'container-tools',
-                    versions: ['latest'])
+                    versions: versions)
 
         }
     }
@@ -42,7 +53,7 @@ pipeline {
             }
             steps {
                 script {
-                    testContainer('jenkins-master', 'jenkins/master')
+                    testContainer(buildRoot: 'jenkins/master', 'jenkins-master')
                 }
             }
         }
@@ -52,7 +63,7 @@ pipeline {
             }
             steps {
                 script {
-                    testContainer('jenkins-slave', 'jenkins/slave')
+                    testContainer(buildRoot: 'jenkins/slave', 'jenkins-slave')
                 }
             }
         }
@@ -73,7 +84,7 @@ pipeline {
             }
             steps {
                 script {
-                    testContainer('ansible-executor', 'ansible')
+                    testContainer(buildRoot: 'ansible','ansible-executor')
                 }
             }
 
@@ -83,8 +94,12 @@ pipeline {
                 changeset "grafana/**"
             }
             steps {
+                scmVersion = changeset "grafana/VERSION"
                 script {
-                    testContainer('grafana')
+                    if (scmVersion) {
+                        version = readFile file: "grafana/VERSION"
+                    }
+                    testContainer(version: version, 'grafana')
                 }
             }
 
