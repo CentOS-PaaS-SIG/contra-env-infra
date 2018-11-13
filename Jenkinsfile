@@ -94,9 +94,8 @@ pipeline {
                 changeset "grafana/**"
             }
             steps {
-                scmVersion = changeset "grafana/VERSION"
                 script {
-                    if (scmVersion) {
+                    if (changeset("grafana/VERSION")) {
                         version = readFile file: "grafana/VERSION"
                     }
                     testContainer(version: version, 'grafana')
