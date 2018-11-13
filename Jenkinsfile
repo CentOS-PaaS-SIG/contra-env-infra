@@ -7,25 +7,14 @@ def testContainer(Map optional = [:], String imageName) {
 
     def versions = null
     if (env.CHANGE_BRANCH == 'master') {
-        if (changeset("grafana/VERSION")) {
-            def version = readFile file: "grafana/VERSION"
+        if (changeset("${buildRoot}/VERSION")) {
+            def version = readFile file: "${buildRoot}/VERSION"
             versions = ['latest', version]
-        } else {
-            versions = ['lastest']
-        }
-    }
-
-    /*
-    def versions = null
-    if (env.CHANGE_BRANCH == 'master') {
-        if (optional.version) {
-            versions = ['latest', optional.version]
         } else {
             versions = ['latest']
         }
     }
-*/
-    /*
+
     def credentials = [usernamePassword(credentialsId: 'continuous-infra-contrainfr-dockercreds',
                         usernameVariable: 'CONTAINER_USERNAME',
                         passwordVariable: 'CONTAINER_PASSWORD')]
@@ -37,20 +26,6 @@ def testContainer(Map optional = [:], String imageName) {
                        openshift_namespace: 'continuous-infra',
                        podName: 'container-builds',
                        jenkins_slave_image: 'jenkins-contra-slave']
-
-*/
-
-    def credentials = [usernamePassword(credentialsId: 'contra-sample-project-dockercreds',
-            usernameVariable: 'CONTAINER_USERNAME',
-            passwordVariable: 'CONTAINER_PASSWORD')]
-
-    def containers = ['container-tools': ['tag': 'latest']]
-
-    def podTemplate = [containersWithProps: containers,
-                       docker_repo_url: '172.30.1.1:5000',
-                       openshift_namespace: 'contra-sample-project',
-                       podName: 'container-builds',
-                       jenkins_slave_image: 'jenkins-contra-sample-project-slave']
 
     deployOpenShiftTemplate(podTemplate) {
         ciPipeline(decorateBuild: decoratePRBuild()) {
