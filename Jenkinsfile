@@ -90,9 +90,10 @@ pipeline {
 
         }
         stage('grafana') {
+            /*
             when {
                 changeset "grafana/**"
-            }
+            }*/
             steps {
                 script {
                     if (changeset("grafana/VERSION")) {
