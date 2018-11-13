@@ -109,6 +109,7 @@ pipeline {
             }
             steps {
                 script {
+                    version = null
                     if (changeset("grafana/VERSION")) {
                         version = readFile file: "grafana/VERSION"
                     }
