@@ -1,5 +1,5 @@
 
-IMAGE_NAME = containerTools
+IMAGE_NAME = containertools
 CONTAINER_NAME = $(IMAGE_NAME)-test
 
 .PHONY: build

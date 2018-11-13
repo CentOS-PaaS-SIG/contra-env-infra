@@ -1,15 +1,15 @@
 def testContainer(String imageName, String buildRoot=null) {
     buildRoot = buildRoot ?: imageName
-    def credentials = [usernamePassword(credentialsId: 'contra-sample-project-dockercreds',
+    def credentials = [usernamePassword(credentialsId: 'continuous-infra-contrainfra-dockercreds',
                         usernameVariable: 'CONTAINER_USERNAME',
                         passwordVariable: 'CONTAINER_PASSWORD')]
-    def containers = ['ansible-executor': ['tag': 'latest']]
+    def containers = ['containertools': ['tag': 'latest']]
 
     podTemplate = [containersWithProps: containers,
-                   docker_repo_url: '172.30.1.1:5000',
-                   openshift_namespace: 'contra-sample-project',
-                   podName: 'generic',
-                   jenkins_slave_image: 'jenkins-contra-sample-project-slave']
+                   docker_repo_url: '172.30.254.79:5000',
+                   openshift_namespace: 'continuous-infra',
+                   podName: 'container-builds',
+                   jenkins_slave_image: 'jenkins-contra-slave']
 
 
     deployOpenShiftTemplate(podTemplate) {
@@ -20,7 +20,7 @@ def testContainer(String imageName, String buildRoot=null) {
                     build_root: buildRoot,
                     container_namespace: 'contrainfra',
                     credentials: credentials,
-                    buildContainer: 'ansible-executor',
+                    buildContainer: 'containertools',
                     versions: ['latest'])
 
         }
@@ -75,7 +75,9 @@ pipeline {
 
         }
         stage('grafana') {
-
+            when {
+                changeset "grafana/**"
+            }
             steps {
                 script {
                     testContainer('grafana')
