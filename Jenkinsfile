@@ -6,7 +6,7 @@ def testContainer(Map optional = [:], String imageName) {
     def buildRoot = optional.buildRoot ?: imageName
 
     def versions = null
-    if (env.CHANGE_BRANCH == 'master') {
+    if (env.BRANCH_NAME == 'master') {
         if (changeset("${buildRoot}/VERSION")) {
             def version = readFile file: "${buildRoot}/VERSION"
             versions = ['latest', version]
