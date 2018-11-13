@@ -19,8 +19,7 @@ def testContainer(String imageName, String buildRoot=null) {
                     docker_namespace: 'contrainfra',
                     credentials: credentials,
                     buildContainer: 'ansible-executor',
-                    release: 'latest')
-
+                    versions: ['latest'])
 
         }
     }
@@ -63,6 +62,9 @@ pipeline {
 
         }
         stage('ansible-executor') {
+            when {
+                changeset "ansible/**"
+            }
             steps {
                 script {
                     testContainer('ansible-executor', 'ansible')
@@ -71,9 +73,7 @@ pipeline {
 
         }
         stage('grafana') {
-            when {
-                changeset "grafana/**"
-            }
+
             steps {
                 script {
                     testContainer('grafana')
