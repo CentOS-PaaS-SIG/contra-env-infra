@@ -1,6 +1,8 @@
 def testContainer(String imageName, String buildRoot=null) {
     buildRoot = buildRoot ?: imageName
-    def credentials = []
+    def credentials = [usernamePassword(credentialsId: 'contra-sample-project-dockercreds',
+                        usernameVariable: 'CONTAINER_USERNAME',
+                        passwordVariable: 'CONTAINER_PASSWORD')]
     def containers = ['ansible-executor': ['tag': 'latest']]
 
     podTemplate = [containersWithProps: containers,
