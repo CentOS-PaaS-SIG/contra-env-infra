@@ -44,7 +44,8 @@ def testContainer(Map optional = [:], String imageName) {
 }
 
 def gitChangeLog(String searchItem) {
-    sh(returnStatus: true, script: "git diff  origin/master --name-only | egrep -i \"${searchItem}\" > /dev/null") == 0
+    def targetBranch = env.CHANGE_TARGET ?: 'master'
+    sh(returnStatus: true, script: "git diff  origin/${targetBranch} --name-only | egrep -i \"${searchItem}\" > /dev/null") == 0
 }
 
 pipeline {
