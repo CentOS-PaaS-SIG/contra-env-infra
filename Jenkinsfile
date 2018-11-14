@@ -56,7 +56,7 @@ pipeline {
                 checkout scm
                 script {
                     def targetBranch = env.CHANGE_TARGET ?: 'master'
-                    sh "git show-ref"
+                    sh "git fetch --no-tags --progress https://github.com/joejstuart/contra-env-infra.git +refs/heads/master:refs/remotes/origin/master"
                 }
             }
         }
