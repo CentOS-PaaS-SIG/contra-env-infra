@@ -50,6 +50,11 @@ def gitChangeLog(String searchItem) {
 pipeline {
     agent any
     stages {
+        stage('checkout scm') {
+            steps {
+                checkout scm
+            }
+        }
         stage('jenkins-master') {
             when {
                 expression {
