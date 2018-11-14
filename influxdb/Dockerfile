@@ -14,7 +14,9 @@ RUN curl https://dl.influxdata.com/influxdb/releases/${INFLUX_BINARY} > /${INFLU
     yum -y clean all && \
     rm -rf /var/cache/yum && \
     rm -f /${INFLUX_BINARY} && \
-    chmod 664 /etc/passwd
+    chmod 664 /etc/passwd && \
+    chown -R 1001:0 /var/lib/influxdb && \
+    chmod g+s /var/lib/influxdb
 
 
 COPY ./s2i/bin /usr/libexec/s2i 
