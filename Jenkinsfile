@@ -51,13 +51,22 @@ def gitChangeLog(String searchItem) {
 pipeline {
     agent any
     stages {
-        stage('checkout scm') {
+        stage('checkout master branch') {
+            // used for running on local non master branches
             steps {
-                checkout scm
+                when {
+                    allOf {
+                        expression {
+                            env.CHANGE_TARGET == null
+                        }
+                        expression {
+                            env.BRANCH_NAME != 'master'
+                        }
+                    }
+
+                }
                 script {
-                    sh 'env'
-                    def targetBranch = env.CHANGE_TARGET ?: 'master'
-                    sh "git fetch --no-tags --progress https://github.com/joejstuart/contra-env-infra.git +refs/heads/master:refs/remotes/origin/master"
+                    sh "git fetch --no-tags --progress ${env.GIT_URL} +refs/heads/master:refs/remotes/origin/master"
                 }
             }
         }
