@@ -56,7 +56,7 @@ pipeline {
                 checkout scm
                 script {
                     def targetBranch = env.CHANGE_TARGET ?: 'master'
-                    sh "git fetch origin/${targetBranch}"
+                    sh "git show-ref"
                 }
             }
         }
