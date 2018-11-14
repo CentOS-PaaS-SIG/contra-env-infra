@@ -7,7 +7,7 @@ def testContainer(Map optional = [:], String imageName) {
 
     def versions = null
     if (env.BRANCH_NAME == 'master') {
-        if (changeset("${buildRoot}/VERSION")) {
+        if (gitChangeLog("${buildRoot}/VERSION")) {
             def version = readFile file: "${buildRoot}/VERSION"
             versions = ['latest', version]
         } else {
@@ -43,7 +43,7 @@ def testContainer(Map optional = [:], String imageName) {
 
 }
 
-def gitChangeLog = { String searchItem ->
+def gitChangeLog(String searchItem) {
     sh(returnStatus: true, script: "git diff  origin/master --name-only | egrep -i \"${searchItem}\" > /dev/null") == 0
 }
 
