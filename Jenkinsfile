@@ -57,7 +57,9 @@ pipeline {
         }
         stage('jenkins-master') {
             when {
-                changeset "jenkins/master/**"
+                expression {
+                    gitChangeLog("jenkins/master/**")
+                }
             }
             steps {
                 script {
@@ -67,7 +69,9 @@ pipeline {
         }
         stage('jenkins-slave') {
             when {
-                changeset "jenkins/slave/**"
+                expression {
+                    gitChangeLog("jenkins/slave/**")
+                }
             }
             steps {
                 script {
@@ -77,7 +81,9 @@ pipeline {
         }
         stage('linchpin') {
             when {
-                changeset "linchpin/**"
+                expression {
+                    gitChangeLog("linchpin/**")
+                }
             }
             steps {
                 script {
@@ -88,7 +94,9 @@ pipeline {
         }
         stage('ansible-executor') {
             when {
-                changeset "ansible/**"
+                expression {
+                    gitChangeLog("ansible/**")
+                }
             }
             steps {
                 script {
@@ -99,7 +107,9 @@ pipeline {
         }
         stage('grafana') {
             when {
-                changeset "grafana/**"
+                expression {
+                    gitChangeLog("grafana/**")
+                }
             }
             steps {
                 script {
@@ -110,7 +120,9 @@ pipeline {
         }
         stage('influxdb') {
             when {
-                changeset "influxdb/**"
+                expression {
+                    gitChangeLog("influxdb/**")
+                }
             }
             steps {
                 script {
@@ -120,7 +132,9 @@ pipeline {
         }
         stage('container-tools') {
             when {
-                changeset "container-tools/**"
+                expression {
+                    gitChangeLog("container-tools/**")
+                }
             }
             steps {
                 script {
