@@ -53,18 +53,17 @@ pipeline {
     stages {
         stage('checkout master branch') {
             // used for running on local non master branches
-            steps {
-                when {
-                    allOf {
-                        expression {
-                            env.CHANGE_TARGET == null
-                        }
-                        expression {
-                            env.BRANCH_NAME != 'master'
-                        }
+            when {
+                allOf {
+                    expression {
+                        env.CHANGE_TARGET == null
                     }
-
+                    expression {
+                        env.BRANCH_NAME != 'master'
+                    }
                 }
+            }
+            steps {
                 script {
                     sh "git fetch --no-tags --progress ${env.GIT_URL} +refs/heads/master:refs/remotes/origin/master"
                 }
