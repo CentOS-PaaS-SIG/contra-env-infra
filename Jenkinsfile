@@ -51,7 +51,9 @@ pipeline {
     agent any
     stages {
         stage('checkout scm') {
-            checkout scm
+            steps {
+                checkout scm
+            }
         }
         stage('jenkins-master') {
             when {
