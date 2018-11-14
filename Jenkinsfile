@@ -43,13 +43,16 @@ def testContainer(Map optional = [:], String imageName) {
 
 }
 
+def gitChangeLog = { String searchItem ->
+    sh(returnStatus: true, script: "git diff  origin/master --name-only | egrep -i \"${searchItem}\" > /dev/null") == 0
+}
 
 pipeline {
     agent any
     stages {
         stage('jenkins-master') {
             when {
-                changeset "jenkins/master/**"
+                gitChangeLog("jenkins/master/**")
             }
             steps {
                 script {
@@ -59,7 +62,7 @@ pipeline {
         }
         stage('jenkins-slave') {
             when {
-                changeset "jenkins/slave/**"
+                gitChangeLog("jenkins/slave/**")
             }
             steps {
                 script {
@@ -69,7 +72,7 @@ pipeline {
         }
         stage('linchpin') {
             when {
-                changeset "linchpin/**"
+                gitChangeLog("linchpin/**")
             }
             steps {
                 script {
@@ -80,7 +83,7 @@ pipeline {
         }
         stage('ansible-executor') {
             when {
-                changeset "ansible/**"
+                gitChangeLog("ansible/**")
             }
             steps {
                 script {
@@ -91,7 +94,7 @@ pipeline {
         }
         stage('grafana') {
             when {
-                changeset "grafana/**"
+                gitChangeLog("grafana/**")
             }
             steps {
                 script {
@@ -102,7 +105,7 @@ pipeline {
         }
         stage('influxdb') {
             when {
-                changeset "influxdb/**"
+                gitChangeLog("influxdb/**")
             }
             steps {
                 script {
@@ -112,7 +115,7 @@ pipeline {
         }
         stage('container-tools') {
             when {
-                changeset "container-tools/**"
+                gitChangeLog("container-tools/**")
             }
             steps {
                 script {
