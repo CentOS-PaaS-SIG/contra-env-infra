@@ -51,15 +51,11 @@ pipeline {
     agent any
     stages {
         stage('checkout scm') {
-            steps {
-                checkout scm
-            }
+            checkout scm
         }
         stage('jenkins-master') {
             when {
-                expression {
-                    gitChangeLog("jenkins/master/**")
-                }
+                changeset "jenkins/master/**"
             }
             steps {
                 script {
@@ -69,9 +65,7 @@ pipeline {
         }
         stage('jenkins-slave') {
             when {
-                expression {
-                    gitChangeLog("jenkins/slave/**")
-                }
+                changeset "jenkins/slave/**"
             }
             steps {
                 script {
@@ -81,9 +75,7 @@ pipeline {
         }
         stage('linchpin') {
             when {
-                expression {
-                    gitChangeLog("linchpin/**")
-                }
+                changeset "linchpin/**"
             }
             steps {
                 script {
@@ -94,9 +86,7 @@ pipeline {
         }
         stage('ansible-executor') {
             when {
-                expression {
-                    gitChangeLog("ansible/**")
-                }
+                changeset "ansible/**"
             }
             steps {
                 script {
@@ -107,9 +97,7 @@ pipeline {
         }
         stage('grafana') {
             when {
-                expression {
-                    gitChangeLog("grafana/**")
-                }
+                changeset "grafana/**"
             }
             steps {
                 script {
@@ -120,9 +108,7 @@ pipeline {
         }
         stage('influxdb') {
             when {
-                expression {
-                    gitChangeLog("influxdb/**")
-                }
+                changeset "influxdb/**"
             }
             steps {
                 script {
@@ -132,9 +118,7 @@ pipeline {
         }
         stage('container-tools') {
             when {
-                expression {
-                    gitChangeLog("container-tools/**")
-                }
+                changeset "container-tools/**"
             }
             steps {
                 script {
