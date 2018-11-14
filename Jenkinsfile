@@ -52,7 +52,7 @@ pipeline {
     stages {
         stage('checkout scm') {
             steps {
-                checkout scm
+                sh 'env'
             }
         }
         stage('jenkins-master') {
