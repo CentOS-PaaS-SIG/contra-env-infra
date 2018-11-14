@@ -14,7 +14,7 @@ def testContainer(Map optional = [:], String imageName) {
             versions = ['latest']
         }
     }
-    
+
     def credentials = [usernamePassword(credentialsId: 'continuous-infra-contrainfra-dockercreds',
                         usernameVariable: 'CONTAINER_USERNAME',
                         passwordVariable: 'CONTAINER_PASSWORD')]
@@ -71,112 +71,117 @@ pipeline {
                 }
             }
         }
-        stage('jenkins-master') {
-            when {
-                anyOf {
-                    expression {
-                        gitChangeLog("jenkins/master/**")
+        stage('test images') {
+            parallel {
+                stage('jenkins-master') {
+                    when {
+                        anyOf {
+                            expression {
+                                gitChangeLog("jenkins/master/**")
+                            }
+                            changeset "jenkins/master/**"
+                        }
                     }
-                    changeset "jenkins/master/**"
-                }
-            }
-            steps {
-                script {
-                    testContainer(buildRoot: 'jenkins/master', 'jenkins-master')
-                }
-            }
-        }
-        stage('jenkins-slave') {
-            when {
-                anyOf {
-                    expression {
-                        gitChangeLog("jenkins/slave/**")
+                    steps {
+                        script {
+                            testContainer(buildRoot: 'jenkins/master', 'jenkins-master')
+                        }
                     }
-                    changeset "jenkins/slave/**"
                 }
-            }
-            steps {
-                script {
-                    testContainer(buildRoot: 'jenkins/slave', 'jenkins-slave')
-                }
-            }
-        }
-        stage('linchpin') {
-            when {
-                anyOf {
-                    expression {
-                        gitChangeLog("linchpin/**")
+                stage('jenkins-slave') {
+                    when {
+                        anyOf {
+                            expression {
+                                gitChangeLog("jenkins/slave/**")
+                            }
+                            changeset "jenkins/slave/**"
+                        }
                     }
-                    changeset "linchpin/**"
+                    steps {
+                        script {
+                            testContainer(buildRoot: 'jenkins/slave', 'jenkins-slave')
+                        }
+                    }
                 }
-            }
-            steps {
-                script {
-                    testContainer('linchpin')
-                }
-            }
+                stage('linchpin') {
+                    when {
+                        anyOf {
+                            expression {
+                                gitChangeLog("linchpin/**")
+                            }
+                            changeset "linchpin/**"
+                        }
+                    }
+                    steps {
+                        script {
+                            testContainer('linchpin')
+                        }
+                    }
 
-        }
-        stage('ansible-executor') {
-            when {
-                anyOf {
-                    expression {
-                        gitChangeLog("ansible/**")
+                }
+                stage('ansible-executor') {
+                    when {
+                        anyOf {
+                            expression {
+                                gitChangeLog("ansible/**")
+                            }
+                            changeset "ansible/**"
+                        }
                     }
-                    changeset "ansible/**"
-                }
-            }
-            steps {
-                script {
-                    testContainer(buildRoot: 'ansible','ansible-executor')
-                }
-            }
+                    steps {
+                        script {
+                            testContainer(buildRoot: 'ansible','ansible-executor')
+                        }
+                    }
 
-        }
-        stage('grafana') {
-            when {
-                anyOf {
-                    expression {
-                        gitChangeLog("grafana/**")
+                }
+                stage('grafana') {
+                    when {
+                        anyOf {
+                            expression {
+                                gitChangeLog("grafana/**")
+                            }
+                            changeset "grafana/**"
+                        }
                     }
-                    changeset "grafana/**"
-                }
-            }
-            steps {
-                script {
-                    testContainer('grafana')
-                }
-            }
+                    steps {
+                        script {
+                            testContainer('grafana')
+                        }
+                    }
 
-        }
-        stage('influxdb') {
-            when {
-                anyOf {
-                    expression {
-                        gitChangeLog("influxdb/**")
+                }
+                stage('influxdb') {
+                    when {
+                        anyOf {
+                            expression {
+                                gitChangeLog("influxdb/**")
+                            }
+                            changeset "influxdb/**"
+                        }
                     }
-                    changeset "influxdb/**"
-                }
-            }
-            steps {
-                script {
-                    testContainer('influxdb')
-                }
-            }
-        }
-        stage('container-tools') {
-            when {
-                anyOf {
-                    expression {
-                        gitChangeLog("container-tools/**")
+                    steps {
+                        script {
+                            testContainer('influxdb')
+                        }
                     }
-                    changeset "container-tools/**"
                 }
-            }
-            steps {
-                script {
-                    testContainer('container-tools')
+                stage('container-tools') {
+                    when {
+                        anyOf {
+                            expression {
+                                gitChangeLog("container-tools/**")
+                            }
+                            changeset "container-tools/**"
+                        }
+                    }
+                    steps {
+                        script {
+                            testContainer('container-tools')
+                        }
+                    }
                 }
+
             }
         }
     }
