@@ -14,8 +14,8 @@ def testContainer(Map optional = [:], String imageName) {
             versions = ['latest']
         }
     }
-
-    def credentials = [usernamePassword(credentialsId: 'continuous-infra-contrainfr-dockercreds',
+    
+    def credentials = [usernamePassword(credentialsId: 'continuous-infra-contrainfra-dockercreds',
                         usernameVariable: 'CONTAINER_USERNAME',
                         passwordVariable: 'CONTAINER_PASSWORD')]
 
