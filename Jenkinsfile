@@ -7,7 +7,7 @@ def testContainer(Map optional = [:], String imageName) {
 
     def versions = null
     if (env.BRANCH_NAME == 'master') {
-        if (gitChangeLog("${buildRoot}/VERSION")) {
+        if (changeset("${buildRoot}/VERSION")) {
             def version = readFile file: "${buildRoot}/VERSION"
             versions = ['latest', version]
         } else {
@@ -52,13 +52,15 @@ pipeline {
     agent any
     stages {
         stage('checkout master branch') {
-            // used for running on local non master branches
+            // used for running on local non-master branches
             when {
                 allOf {
                     expression {
+                        // it's not a PR
                         env.CHANGE_TARGET == null
                     }
                     expression {
+                        // the branch isn't master
                         env.BRANCH_NAME != 'master'
                     }
                 }
