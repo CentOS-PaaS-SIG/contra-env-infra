@@ -51,15 +51,14 @@ def gitChangeLog(String searchItem) {
 pipeline {
     agent any
     stages {
-        stage('checkout scm') {
-            steps {
-                sh 'env'
-            }
-        }
         stage('jenkins-master') {
+            searchTerm = "jenkins/master/**"
             when {
-                expression {
-                    gitChangeLog("jenkins/master/**")
+                anyOf {
+                    expression {
+                        gitChangeLog(searchTerm)
+                    }
+                    changeset searchTerm
                 }
             }
             steps {
@@ -69,9 +68,13 @@ pipeline {
             }
         }
         stage('jenkins-slave') {
+            searchTerm = "jenkins/slave/**"
             when {
-                expression {
-                    gitChangeLog("jenkins/slave/**")
+                anyOf {
+                    expression {
+                        gitChangeLog(searchTerm)
+                    }
+                    changeset searchTerm
                 }
             }
             steps {
@@ -81,9 +84,13 @@ pipeline {
             }
         }
         stage('linchpin') {
+            searchTerm = "linchpin/**"
             when {
-                expression {
-                    gitChangeLog("linchpin/**")
+                anyOf {
+                    expression {
+                        gitChangeLog(searchTerm)
+                    }
+                    changeset searchTerm
                 }
             }
             steps {
@@ -94,9 +101,13 @@ pipeline {
 
         }
         stage('ansible-executor') {
+            searchTerm = "ansible/**"
             when {
-                expression {
-                    gitChangeLog("ansible/**")
+                anyOf {
+                    expression {
+                        gitChangeLog(searchTerm)
+                    }
+                    changeset searchTerm
                 }
             }
             steps {
@@ -107,9 +118,13 @@ pipeline {
 
         }
         stage('grafana') {
+            searchTerm = "grafana/**"
             when {
-                expression {
-                    gitChangeLog("grafana/**")
+                anyOf {
+                    expression {
+                        gitChangeLog(searchTerm)
+                    }
+                    changeset searchTerm
                 }
             }
             steps {
@@ -120,9 +135,13 @@ pipeline {
 
         }
         stage('influxdb') {
+            searchTerm = "influxdb/**"
             when {
-                expression {
-                    gitChangeLog("influxdb/**")
+                anyOf {
+                    expression {
+                        gitChangeLog(searchTerm)
+                    }
+                    changeset searchTerm
                 }
             }
             steps {
@@ -132,9 +151,13 @@ pipeline {
             }
         }
         stage('container-tools') {
+            searchTerm = "container-tools/**"
             when {
-                expression {
-                    gitChangeLog("container-tools/**")
+                anyOf {
+                    expression {
+                        gitChangeLog(searchTerm)
+                    }
+                    changeset searchTerm
                 }
             }
             steps {
