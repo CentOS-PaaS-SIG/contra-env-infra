@@ -39,7 +39,7 @@ parameters:
   value: db0
   description: The initial db that will be created
 - name: NAMESPACE
-  value: contra-sample-project
+  value: "{{ openshift_project }}"
   description: The imageStream namespace
 objects:
 - apiVersion: v1

@@ -37,7 +37,7 @@ parameters:
   value: grafana-5.3.0-1.x86_64.rpm
   description: The grafana rpm
 - name: NAMESPACE
-  value: contra-sample-project
+  value: "{{ openshift_project }}"
 - name: GF_AUTH_ANONYMOUS_ENABLED
   value: "true"
 - name: INIT_DATASOURCE
