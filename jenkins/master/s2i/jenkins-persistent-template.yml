@@ -284,7 +284,7 @@ parameters:
 - name: NAMESPACE
   displayName: Jenkins ImageStream Namespace
   description: The OpenShift Namespace where the Jenkins ImageStream resides.
-  value: contra-sample-project
+  value: "{{ openshift_project }}"
 - name: JENKINS_IMAGE_STREAM_TAG
   displayName: Jenkins ImageStreamTag
   description: Name of the ImageStreamTag to be used for the Jenkins image.
