@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Template
 labels:
-  template: jenkins-contra-sample-project-slave-builder
+  template: jenkins-contra-slave-builder
 metadata:
   annotations:
-    description: Contra Sample Slaves
+    description: Contra Jenkins Slaves
     iconClass: icon-jenkins
     tags: instant-app,jenkins
-  name: jenkins-contra-sample-project-slave-builder
+  name: jenkins-contra-slave-builder
 objects:
 - apiVersion: v1
   kind: ImageStream
@@ -16,17 +16,17 @@ objects:
       slave-label: jenkins-contra-sample-project-slave jenkins-contra-slave contra-slave
     labels:
       role: jenkins-slave
-    name: jenkins-contra-sample-project-slave
+    name: jenkins-contra-slave
   spec: {}
 - apiVersion: v1
   kind: BuildConfig
   metadata:
-    name: jenkins-contra-sample-project-slave
+    name: jenkins-contra-slave
   spec:
     output:
       to:
         kind: ImageStreamTag
-        name: jenkins-contra-sample-project-slave:latest
+        name: jenkins-contra-slave:latest
     resources: {}
     source:
       contextDir: ${CONTEXTDIR}
@@ -37,8 +37,8 @@ objects:
     strategy:
       dockerStrategy:
         env:
-          - name: GIT_SSL_NO_VERIFY
-            value: 'true'
+        - name: GIT_SSL_NO_VERIFY
+          value: 'true'
       type: Docker
     triggers:
     - type: ConfigChange
