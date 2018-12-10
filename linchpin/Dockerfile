@@ -2,7 +2,7 @@ FROM fedora:28
 
 LABEL name="contrainfra/linchpin-executor" \
       maintainer="rnester@redhat.com, cmays@redhat.com, ari@redhat.com" \
-      version="0.0.4" \
+      version="1.6.5" \
       description="A container to set up infrastructure instances"
 
 ENV APP_ROOT=/linchpin/
