@@ -1,6 +1,16 @@
 #!groovy
 
-@Library('contra-lib') _
+//@Library('contra-lib') _
+
+def libraries = ['contra-lib': ['imagePush', 'https://github.com/joejstuart/contra-lib.git']]
+
+libraries.each { name, repo ->
+    retry(10) {
+        library identifier: "${name}@${repo[0]}",
+                retriever: modernSCM([$class: 'GitSCMSource',
+                                      remote: repo[1]])
+    }
+}
 
 def testContainer(Map optional = [:], String imageName) {
     def buildRoot = optional.buildRoot ?: imageName

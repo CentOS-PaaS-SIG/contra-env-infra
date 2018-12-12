@@ -22,6 +22,7 @@ push:
 
 .PHONY: clean
 clean:
-	podman rm --force $(CONTAINER_NAME)\
-    buildah rmi --force $(IMAGE_NAME)
+	podman rm --force $(CONTAINER_NAME); \
+    buildah rmi --force $(IMAGE_NAME); \
+    buildah rmi --force $(IMAGE_NAME)-candidate
 

@@ -22,3 +22,8 @@ push:
     buildah push --creds $(USERNAME):$(PASSWORD) localhost/$(IMAGE_NAME)-candidate:$(VERSION) \
     $(CONTAINER_REGISTRY)/$(CONTAINER_NAMESPACE)/$(IMAGE_NAME):$(VERSION)
 
+.PHONY: clean
+clean:
+	podman rm --force $(CONTAINER_NAME)\
+    buildah rmi --force $(IMAGE_NAME)
+
