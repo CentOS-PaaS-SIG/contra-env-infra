@@ -5,8 +5,8 @@ CONTAINER_NAME = $(IMAGE_NAME)-test
 USERNAME ?= dummy_username
 PASSWORD ?= dummy_password
 VERSION ?= dummy_version
-CONTAINER_REGISTRY ?= "docker://docker.io"
-CONTAINER_NAMESPACE ?= "contrainfra"
+CONTAINER_REGISTRY ?= docker://docker.io
+CONTAINER_NAMESPACE ?= contrainfra
 
 .PHONY: build
 build:
@@ -19,6 +19,6 @@ test:
 
 .PHONY: push
 push:
-    buildah push --creds $(USERNAME):$(PASSWORD) localhost/$(IMAGE_NAME)-candidate:$(VERSION) \
-    $(CONTAINER_REGISTRY)/$(CONTAINER_NAMESPACE)/$(IMAGE_NAME):$(VERSION)
+	buildah push --creds $(USERNAME)\:$(PASSWORD) localhost/$(IMAGE_NAME)-candidate\:$(VERSION) \
+    $(CONTAINER_REGISTRY)/$(CONTAINER_NAMESPACE)/$(IMAGE_NAME)\:$(VERSION)
 
