@@ -113,6 +113,7 @@ pipeline {
                         }
                     }
                 }
+                /*
                 stage('linchpin') {
                     when {
                         anyOf {
@@ -128,7 +129,7 @@ pipeline {
                         }
                     }
 
-                }
+                }*/
                 stage('ansible-executor') {
                     when {
                         anyOf {
