@@ -2,6 +2,7 @@
 
 @Library('contra-lib') _
 
+
 def testContainer(Map optional = [:], String imageName) {
     def buildRoot = optional.buildRoot ?: imageName
 
@@ -103,6 +104,7 @@ pipeline {
                         }
                     }
                 }
+                /*
                 stage('linchpin') {
                     when {
                         anyOf {
@@ -118,7 +120,7 @@ pipeline {
                         }
                     }
 
-                }
+                }*/
                 stage('ansible-executor') {
                     when {
                         anyOf {

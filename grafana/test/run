@@ -28,6 +28,7 @@ DOCKER_IMAGE=false
 test_port=3000
 
 s2i_args="--pull-policy=never --loglevel=2"
+S2I_IMAGE="${IMAGE_NAME}-testapp"
 
 image_exists() {
   buildah inspect $1 &>/dev/null
@@ -52,14 +53,14 @@ run_s2i_build() {
   docker info > /dev/null 2>&1
   if [ $? == 0 ]; then
     docker build -t ${IMAGE_NAME} .
-    s2i build --incremental=true ${s2i_args} -E "${test_dir}/test/environment" file://${test_dir}/test-app ${IMAGE_NAME} ${IMAGE_NAME}-testapp
+    s2i build --incremental=true ${s2i_args} -E "${test_dir}/test/environment" file://${test_dir}/test-app ${IMAGE_NAME} ${S2I_IMAGE}
 
     result=$?
     if [ $result != 0 ]; then
         exit $result
     fi
 
-    IMAGE_NAME=${IMAGE_NAME}-testapp
+    IMAGE_NAME=${S2I_IMAGE}
     DOCKER_IMAGE=true
     rm -rf ${test_dir}/test-app/.git
     echo "docker is running"
@@ -122,9 +123,9 @@ test_connection() {
 
 
 cleanup() {
-  if image_exists ${IMAGE_NAME}; then
+  if image_exists ${S2I_IMAGE}; then
     podman rm --force ${CONTAINER_NAME}
-    buildah rmi --force ${IMAGE_NAME}
+    buildah rmi --force ${S2I_IMAGE}
   fi
 }
 
