@@ -19,6 +19,7 @@ test:
 
 .PHONY: push
 push:
+	buildah tag localhost/$(IMAGE_NAME)-candidate:latest localhost/$(IMAGE_NAME)-candidate:$(VERSION)
 	buildah push --creds $(USERNAME)\:$(PASSWORD) localhost/$(IMAGE_NAME)-candidate\:$(VERSION) \
     $(CONTAINER_REGISTRY)/$(CONTAINER_NAMESPACE)/$(IMAGE_NAME)\:$(VERSION)
 
