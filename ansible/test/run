@@ -27,6 +27,7 @@ cid_file=$($MKTEMP_EXEC -u --suffix=.cid)
 DOCKER_IMAGE=false
 
 s2i_args="--pull-policy=never --loglevel=2"
+S2I_IMAGE="${IMAGE_NAME}-testapp"
 
 image_exists() {
   buildah inspect $1 &>/dev/null
@@ -34,8 +35,8 @@ image_exists() {
 
 
 cleanup() {
-  if image_exists ${IMAGE_NAME}; then
-    buildah rmi --force ${IMAGE_NAME}
+  if image_exists ${S2I_IMAGE}; then
+    buildah rmi --force ${S2I_IMAGE}
   fi
 }
 
