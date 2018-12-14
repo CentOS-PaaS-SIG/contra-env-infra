@@ -1,42 +1,78 @@
 FROM fedora:28
-
-LABEL name="contrainfra/linchpin-executor" \
-      maintainer="rnester@redhat.com, cmays@redhat.com, ari@redhat.com" \
+LABEL name="contrainfra/linchpin" \
+      maintainer="https://github.com/CentOS-PaaS-SIG/linchpin" \
       version="1.6.5" \
-      description="A container to set up infrastructure instances"
+      description="LinchPin executable container running the latest Fedora release"
 
-ENV APP_ROOT=/linchpin/
-ENV PATH=${APP_ROOT}/bin:${PATH} HOME=${APP_ROOT}
+ARG install_location='linchpin'
+ARG git_project='https://github.com/CentOS-PaaS-SIG/linchpin'
+ARG git_branch='develop'
 
+ENV UID=10001
+ENV HOME=/linchpin/
+ENV PATH=${HOME}/bin:${PATH}
 
-COPY ansible.cfg /etc/ansible/ansible.cfg
-COPY bin/ ${APP_ROOT}/bin/
+COPY conf/ansible.cfg /etc/ansible/ansible.cfg
+COPY conf/linchpin.conf /etc/linchpin.conf
+COPY bin/ ${HOME}/bin/
 
-RUN dnf install -y git \
-        wget \
-        libffi-devel \
-        openssl-devel \
-        libyaml-devel \
-        gmp-devel \
+RUN curl -L -o /etc/yum.repos.d/beaker-client.repo \
+    https://beaker-project.org/yum/beaker-client-Fedora.repo; \
+    dnf install -y git beaker-client \
+        python-pip \
+        ansible \
+        curl gcc \
         python-devel \
-        gmp-devel \
-        libselinux-python \
-        make \
-        gcc \
+        python2-shade \
+        openssl-devel \
+        redhat-rpm-config file \
+        net-tools \
+        python-krbV \
+        libxslt-python \
         libxml2-python \
-        libxslt-python && \
-    dnf clean all && \
-    pip install git+git://github.com/CentOS-PaaS-SIG/linchpin.git#egg=linchpin[beaker] && \
-    mkdir -p ${APP_ROOT} && \
-    chmod -R u+x ${APP_ROOT}/bin && \
-    chgrp -R 0 ${APP_ROOT} && \
-    chmod -R g=u ${APP_ROOT} /etc/passwd
+        krb5-workstation \
+        libselinux-python \
+        && dnf clean all; \
+    if [ "${install_location}" == "." ]; then \
+        if [[ ${git_branch} == PR-* ]]; then \
+            git clone ${git_project} lp; \
+            pushd lp; \
+            PRNUM="$(cut -d'-' -f2 <<<${git_branch})"; \
+            git fetch origin pull/${PRNUM}/head:pr_branch; \
+            git checkout pr_branch; \
+        else \
+            git clone -b ${git_branch} --single-branch ${git_project} lp; \
+            pushd lp; \
+        fi; \
+    fi; \
+        pip install -U pip; \
+        pip install -U setuptools; \
+        pip install ${install_location}; \
+        pip install ${install_location}[beaker]; \
+        mkdir -p ${HOME}/bin/ && \
+        chmod -R u+x ${HOME}/bin && \
+        chown -R ${UID}.0 ${HOME} && \
+        chmod -R g=u ${HOME} /etc/passwd; \
+        (cd /lib/systemd/system/sysinit.target.wants/; for i in *; \
+        do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
+        rm -f /lib/systemd/system/multi-user.target.wants/*; \
+        rm -f /etc/systemd/system/*.wants/*; \
+        rm -f /lib/systemd/system/local-fs.target.wants/*; \
+        rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
+        rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
+        rm -f /lib/systemd/system/basic.target.wants/*; \
+        rm -f /lib/systemd/system/anaconda.target.wants/*; \
+    if [ "install_location" == "." ]; then \
+    #default install_location = 'linchpin'
+        popd; \
+        rm -rf lp; \
+    fi;
 
 ### Containers should NOT run as root as a good practice
-USER 10001
-WORKDIR ${APP_ROOT}
+USER ${UID}
+WORKDIR ${HOME}
 
 ### user name recognition at runtime w/ an arbitrary uid - for OpenShift deployments
 ENTRYPOINT [ "uid_entrypoint" ]
 
-CMD run
+CMD [ "run" ]
