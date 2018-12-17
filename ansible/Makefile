@@ -1,5 +1,5 @@
 
-IMAGE_NAME = ansible
+IMAGE_NAME = ansible-executor
 CONTAINER_NAME = $(IMAGE_NAME)-test
 
 USERNAME ?= dummy_username
