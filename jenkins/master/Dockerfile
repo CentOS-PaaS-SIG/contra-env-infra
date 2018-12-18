@@ -1,11 +1,6 @@
 FROM openshift/jenkins-2-centos7:v3.11
 
-COPY ./openshift /opt/openshift
+COPY --chown=1001:0 ./openshift /opt/openshift
 
-RUN /usr/local/bin/install-plugins.sh /opt/openshift/contra-plugins.txt && \
-    chown -R 1001:0 /opt/openshift && \
-    /usr/local/bin/fix-permissions /opt/openshift && \
-    /usr/local/bin/fix-permissions /opt/openshift/configuration/init.groovy.d
-
-USER 1001
+RUN /usr/local/bin/install-plugins.sh /opt/openshift/contra-plugins.txt
 
