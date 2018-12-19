@@ -51,7 +51,7 @@ RUN curl -L -o /etc/yum.repos.d/beaker-client.repo \
         pip install ${install_location}[beaker]; \
         mkdir -p ${HOME}/bin/ && \
         chmod -R u+x ${HOME}/bin && \
-        chown -R ${UID}.0 ${HOME} && \
+        chgrp -R 1000 ${HOME} && \
         chmod -R g=u ${HOME} /etc/passwd; \
         (cd /lib/systemd/system/sysinit.target.wants/; for i in *; \
         do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
