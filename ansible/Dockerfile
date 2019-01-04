@@ -21,7 +21,8 @@ RUN dnf install -y ansible \
         python3-boto3 \
         python2-libcloud \
         python3-libcloud \
-	python2-virtualenv \
+	    python2-virtualenv \
+        dumb-init \
         rsync && \
     dnf clean all && \
     mkdir -p ${APP_ROOT} && \
@@ -34,6 +35,6 @@ USER 10001
 WORKDIR ${APP_ROOT}
 
 ### user name recognition at runtime w/ an arbitrary uid - for OpenShift deployments
-ENTRYPOINT [ "uid_entrypoint" ]
+ENTRYPOINT [ "/usr/bin/dumb-init", "--", "uid_entrypoint" ]
 
 CMD run
