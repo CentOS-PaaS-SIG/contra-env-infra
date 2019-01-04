@@ -9,7 +9,10 @@ LABEL k8s.io.description="Influxdb time series db" \
       openshift.io.tags="influxdb,ci" \
       io.openshift.s2i.scripts-url=image:///usr/libexec/s2i
 
-RUN curl https://dl.influxdata.com/influxdb/releases/${INFLUX_BINARY} > /${INFLUX_BINARY} && \
+RUN curl https://copr.fedorainfracloud.org/coprs/alsadi/dumb-init/repo/epel-7/alsadi-dumb-init-epel-7.repo -o \
+    /etc/yum.repos.d/alsadi-dumb-init-epel-7.repo && \
+    curl https://dl.influxdata.com/influxdb/releases/${INFLUX_BINARY} > /${INFLUX_BINARY} && \
+    yum install dumb-init -y && \
     yum -y localinstall /${INFLUX_BINARY} && \
     yum -y clean all && \
     rm -rf /var/cache/yum && \
@@ -30,6 +33,6 @@ COPY entrypoint.sh init-influxdb.sh /
 
 USER 1001
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/usr/bin/dumb-init", "--", "/entrypoint.sh"]
 
 CMD ["/usr/libexec/s2i/run"]
