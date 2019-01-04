@@ -10,7 +10,9 @@ LABEL k8s.io.description="Grafana dashboard" \
       io.openshift.s2i.scripts-url=image:///usr/libexec/s2i
 
 
-RUN yum -y install git unzip nss_wrapper && \
+RUN curl https://copr.fedorainfracloud.org/coprs/alsadi/dumb-init/repo/epel-7/alsadi-dumb-init-epel-7.repo -o \
+    /etc/yum.repos.d/alsadi-dumb-init-epel-7.repo && \
+    yum -y install git unzip nss_wrapper dumb-init && \
     curl -L -o /tmp/grafana.rpm https://s3-us-west-2.amazonaws.com/grafana-releases/release/${GRAFANA_RPM} && \
     yum -y localinstall /tmp/grafana.rpm && \
     yum -y clean all && \
@@ -38,6 +40,9 @@ VOLUME ["/var/lib/grafana", "/var/log/grafana", "/etc/grafana"]
 EXPOSE 3000
 
 USER 1001
+
+### user name recognition at runtime w/ an arbitrary uid - for OpenShift deployments
+ENTRYPOINT [ "/usr/bin/dumb-init", "--", "uid_entrypoint" ]
 
 CMD ["/usr/libexec/s2i/run"]
 
