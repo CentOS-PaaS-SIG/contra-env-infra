@@ -2,7 +2,7 @@ FROM fedora:29
 
 LABEL k8s.io.description="Container to help build containers" \
       k8s.io.display-name="container-tools" \
-      openshift.io.tags="contra, container-tools" \
+      openshift.io.tags="contra, container-tools"
 
 RUN dnf install -y buildah make podman dumb-init procps && \
     chmod 664 /etc/passwd
