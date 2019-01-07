@@ -17,7 +17,6 @@ objects:
       tags: "container-tools"
       openshift.io/provider-display-name: "Red Hat, Inc."
   spec: {}
-
 - kind: BuildConfig
   apiVersion: v1
   metadata:
