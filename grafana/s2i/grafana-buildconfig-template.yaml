@@ -73,14 +73,11 @@ objects:
         uri: ${REPO_URL}
       type: Git
     strategy:
-      sourceStrategy:
-        from:
-          kind: DockerImage
-          name: 172.30.1.1:5000/contra-sample-project/grafana:latest
+      dockerStrategy:
         env:
           - name: GRAFANA_INSTALL
             value: ${GRAFANA_INSTALL}
-      type: Source
+      type: Docker
     triggers:
     - type: ConfigChange
 - apiVersion: v1
