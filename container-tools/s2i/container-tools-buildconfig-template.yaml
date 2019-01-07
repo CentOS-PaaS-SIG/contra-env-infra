@@ -12,11 +12,12 @@ objects:
     name: "container-tools"
     annotations:
       description: "A container used to execute container commands"
-      openshift.io/display-name: "container tools (Ephemeral)"
+      openshift.io/display-name: "Container command Executor (Ephemeral)"
       iconClass: container-tools
       tags: "container-tools"
       openshift.io/provider-display-name: "Red Hat, Inc."
   spec: {}
+
 - kind: BuildConfig
   apiVersion: v1
   metadata:
