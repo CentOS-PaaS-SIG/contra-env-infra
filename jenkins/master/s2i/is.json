@@ -1,0 +1,18 @@
+{
+   "kind": "ImageStream",
+   "apiVersion": "v1",
+   "metadata": {
+      "name": "jenkins2",
+      "labels": {
+         "application": "jenkins2"
+      }
+   },
+   "spec": {
+      "dockerImageRepository": "",
+      "tags": [                   
+         {
+            "name": "latest"
+         }
+      ]
+   }
+}

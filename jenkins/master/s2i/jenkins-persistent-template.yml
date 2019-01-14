@@ -289,34 +289,34 @@ parameters:
   displayName: Jenkins ImageStreamTag
   description: Name of the ImageStreamTag to be used for the Jenkins image.
   value: jenkins:latest
-- name: LOAD_SEED_JOB
+- name: "{{ jenkins_load_seed_job }}"
   displayName: Load seed job
   description: Whether to load a dsl seed job
   value: 'true'
 - name: DSL_JOB_REPO
   displayName: DSL job repo
   description: The repository of dsl jobs
-  value: 'CentOS-PaaS-SIG/contra-env-sample-project'
+  value: "{{ jenkins_dsl_job_repo }}"
 - name: DSL_REPO_BRANCH
   displayName: DSL repo branch
   description: The branch to use for job dsl repository
-  value: master
+  value: "{{ jenkins_dsl_repo_branch }}"
 - name: ENABLE_INFLUXDB
   displayName: Enable Influxdb
   description: Install and configure the Influxdb plugin
-  value: 'false'
+  value: "{{ jenkins_enable_metrics }}"
 - name: INFLUXDB_ROUTE
   displayName: Influxdb route
   description: The http api for Influxdb
-  value: influxdb-continuous-infra.apps.ci.centos.org
+  value: "{{ influxdb_api_url }}"
 - name: INFLUXDB_USERNAME
   displayName: Influxdb username
   description: The username to auth to influxdb
-  value: contra
+  value: "{{ influxdb_admin_user }}"
 - name: INFLUXDB_PASSWORD
   displayName: Influxdb password
   description: The password to auth to influxdb
-  value: ''
+  value: "{{ influxdb_admin_password }}"
 - name: INFLUXDB_INSTANCE
   displayName: Influxdb instance
   description: The name of the configured influx instance

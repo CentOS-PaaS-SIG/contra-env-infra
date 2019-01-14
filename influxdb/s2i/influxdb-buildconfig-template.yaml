@@ -33,7 +33,7 @@ parameters:
   value: contra
   description: The influxdb admin user
 - name: INFLUXDB_ADMIN_PASSWORD
-  value: ""
+  value: "{{ influxdb_admin_password }}"
   description: The admin password. Leave empty for a random password
 - name: INFLUXDB_DB
   value: db0
