@@ -258,7 +258,7 @@ parameters:
   value: master
 - description: Path within Git project to build; empty for root project directory.
   name: CONTEXT_DIR
-  value: jenkins/master
+  value: jenkins/master/openshift
 - name: JENKINS_SERVICE_NAME
   displayName: Jenkins Service Name
   description: The name of the OpenShift Service exposed for the Jenkins container.
