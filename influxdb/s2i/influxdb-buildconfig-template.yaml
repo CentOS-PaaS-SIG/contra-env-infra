@@ -18,14 +18,14 @@ parameters:
   value: 10Gi
   description: The size of the persistent storage for Influxdb
 - name: REPO_URL
-  value: https://github.com/CentOS-PaaS-SIG/contra-env-infra.git
+  value: "{{ project_repo }}"
   description: The dockerfile repo url
 - name: REPO_CONTEXTDIR
   description: The sub-directory inside the repository.
   value: influxdb
 - name: REPO_REF
   description: The git ref or tag to use for customization.
-  value: master
+  value: "{{ project_branch }}"
 - name: INFLUXDB_BINARY
   value: influxdb-1.6.2.x86_64.rpm
   description: The influx rpm
