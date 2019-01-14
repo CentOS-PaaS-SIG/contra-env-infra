@@ -66,14 +66,11 @@ objects:
         uri: ${REPO_URL}
       type: Git
     strategy:
-      sourceStrategy:
-        from:
-          kind: DockerImage
-          name: docker.io/contrainfra/influxdb:latest
+      dockerStrategy:
         env:
           - name: INFLUXDB_BINARY
             value: ${INFLUXDB_BINARY}
-      type: Source
+      type: Docker
     triggers:
     - type: ConfigChange
 - kind: PersistentVolumeClaim
