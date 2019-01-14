@@ -292,7 +292,7 @@ parameters:
 - name: LOAD_SEED_JOB
   displayName: Load seed job
   description: Whether to load a dsl seed job
-  value: "{{ jenkins_load_seed_job }}"
+  value: 'true'
 - name: DSL_JOB_REPO
   displayName: DSL job repo
   description: The repository of dsl jobs
