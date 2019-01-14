@@ -289,10 +289,10 @@ parameters:
   displayName: Jenkins ImageStreamTag
   description: Name of the ImageStreamTag to be used for the Jenkins image.
   value: jenkins:latest
-- name: "{{ jenkins_load_seed_job }}"
+- name: LOAD_SEED_JOB
   displayName: Load seed job
   description: Whether to load a dsl seed job
-  value: 'true'
+  value: "{{ jenkins_load_seed_job }}"
 - name: DSL_JOB_REPO
   displayName: DSL job repo
   description: The repository of dsl jobs
