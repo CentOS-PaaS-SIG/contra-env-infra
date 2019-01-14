@@ -74,8 +74,8 @@ objects:
       type: Git
     strategy:
       sourceStrategy:
-        from:	
-          kind: DockerImage	
+        from:
+          kind: DockerImage
           name: docker.io/contrainfra/grafana:latest
         env:
           - name: GRAFANA_INSTALL
