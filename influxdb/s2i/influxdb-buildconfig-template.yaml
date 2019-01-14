@@ -70,6 +70,7 @@ objects:
         from:
           kind: DockerImage
           name: docker.io/contrainfra/influxdb:latest
+        env:
           - name: INFLUXDB_BINARY
             value: ${INFLUXDB_BINARY}
       type: Source
