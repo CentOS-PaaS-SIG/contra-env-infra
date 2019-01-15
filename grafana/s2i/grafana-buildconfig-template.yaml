@@ -19,7 +19,7 @@ parameters:
   description: The size of the persistent storage for Grafana
 - name: REPO_URL
   description: The repo url that contains the source. e.g. https://github.com/CentOS-PaaS-SIG/ci-pipeline.git
-  value: "{{ project_repo }}"
+  value: "{{ helper_project_repo }}"
   required: true
 - name: REPO_CONTEXTDIR
   description: The sub-directory inside the repository. e.g. config/Dockerfiles/grafana
@@ -27,7 +27,7 @@ parameters:
   required: true
 - name: REPO_REF
   description: The git ref or tag to use for customization.
-  value: "{{ project_branch }}"
+  value: "{{ helper_project_branch }}"
   required: true
 - name: ADMIN_PASSWORD
   description: Password for the admin user
