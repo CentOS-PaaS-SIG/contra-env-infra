@@ -251,14 +251,14 @@ objects:
 parameters:
 - description: Git source URI for Jenkins S2I. E.g. https://github.com/CentOS-PaaS-SIG/contra-env-infra
   name: REPO_URL
-  value: https://github.com/CentOS-PaaS-SIG/contra-env-infra.git
+  value: "{{ project_repo }}"
   required: true
 - description: Git branch/tag reference
   name: REPO_REF
-  value: master
+  value: "{{ project_branch }}"
 - description: Path within Git project to build; empty for root project directory.
   name: CONTEXT_DIR
-  value: jenkins/master
+  value: jenkins/master/openshift
 - name: JENKINS_SERVICE_NAME
   displayName: Jenkins Service Name
   description: The name of the OpenShift Service exposed for the Jenkins container.
@@ -296,27 +296,27 @@ parameters:
 - name: DSL_JOB_REPO
   displayName: DSL job repo
   description: The repository of dsl jobs
-  value: 'CentOS-PaaS-SIG/contra-env-sample-project'
+  value: "{{ jenkins_dsl_job_repo }}"
 - name: DSL_REPO_BRANCH
   displayName: DSL repo branch
   description: The branch to use for job dsl repository
-  value: master
+  value: "{{ jenkins_dsl_repo_branch }}"
 - name: ENABLE_INFLUXDB
   displayName: Enable Influxdb
   description: Install and configure the Influxdb plugin
-  value: 'false'
+  value: "{{ jenkins_enable_metrics }}"
 - name: INFLUXDB_ROUTE
   displayName: Influxdb route
   description: The http api for Influxdb
-  value: influxdb-continuous-infra.apps.ci.centos.org
+  value: "{{ influxdb_api_route }}"
 - name: INFLUXDB_USERNAME
   displayName: Influxdb username
   description: The username to auth to influxdb
-  value: contra
+  value: "{{ influxdb_admin_user }}"
 - name: INFLUXDB_PASSWORD
   displayName: Influxdb password
   description: The password to auth to influxdb
-  value: ''
+  value: "{{ influxdb_admin_password }}"
 - name: INFLUXDB_INSTANCE
   displayName: Influxdb instance
   description: The name of the configured influx instance

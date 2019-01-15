@@ -18,22 +18,22 @@ parameters:
   value: 10Gi
   description: The size of the persistent storage for Influxdb
 - name: REPO_URL
-  value: https://github.com/CentOS-PaaS-SIG/contra-env-infra.git
+  value: "{{ project_repo }}"
   description: The dockerfile repo url
 - name: REPO_CONTEXTDIR
   description: The sub-directory inside the repository.
   value: influxdb
 - name: REPO_REF
   description: The git ref or tag to use for customization.
-  value: master
+  value: "{{ project_branch }}"
 - name: INFLUXDB_BINARY
   value: influxdb-1.6.2.x86_64.rpm
   description: The influx rpm
 - name: INFLUXDB_ADMIN_USER
-  value: contra
+  value: "{{ influxdb_admin_user }}"
   description: The influxdb admin user
 - name: INFLUXDB_ADMIN_PASSWORD
-  value: ""
+  value: "{{ influxdb_admin_password }}"
   description: The admin password. Leave empty for a random password
 - name: INFLUXDB_DB
   value: db0
@@ -66,13 +66,11 @@ objects:
         uri: ${REPO_URL}
       type: Git
     strategy:
-      sourceStrategy:
-        from:
-          kind: DockerImage
-          name: docker.io/contrainfra/influxdb:latest
+      dockerStrategy:
+        env:
           - name: INFLUXDB_BINARY
             value: ${INFLUXDB_BINARY}
-      type: Source
+      type: Docker
     triggers:
     - type: ConfigChange
 - kind: PersistentVolumeClaim

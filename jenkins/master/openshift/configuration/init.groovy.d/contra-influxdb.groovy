@@ -11,7 +11,7 @@ import jenkinsci.plugins.influxdb.models.Target
 def logger = Logger.getLogger("")
 
 env = System.getenv()
-if (env['ENABLE_INFLUXDB'] == 'true') {
+if (env['ENABLE_INFLUXDB'].toBoolean()) {
     logger.info('Configuring Influxdb plugin')
     def influxdb = Jenkins.instance.getDescriptorByType(jenkinsci.plugins.influxdb.DescriptorImpl)
 

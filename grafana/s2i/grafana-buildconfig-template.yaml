@@ -19,7 +19,7 @@ parameters:
   description: The size of the persistent storage for Grafana
 - name: REPO_URL
   description: The repo url that contains the source. e.g. https://github.com/CentOS-PaaS-SIG/ci-pipeline.git
-  value: https://github.com/CentOS-PaaS-SIG/contra-env-infra.git
+  value: "{{ project_repo }}"
   required: true
 - name: REPO_CONTEXTDIR
   description: The sub-directory inside the repository. e.g. config/Dockerfiles/grafana
@@ -27,11 +27,15 @@ parameters:
   required: true
 - name: REPO_REF
   description: The git ref or tag to use for customization.
-  value: master
+  value: "{{ project_branch }}"
   required: true
 - name: ADMIN_PASSWORD
   description: Password for the admin user
-  value: secret
+  value: "{{ grafana_admin_password }}"
+  required: true
+- name: ADMIN_USER
+  description: admin username
+  value: "{{ grafana_admin_user }}"
   required: true
 - name: GRAFANA_INSTALL
   value: grafana-5.3.0-1.x86_64.rpm
@@ -42,12 +46,12 @@ parameters:
   value: "true"
 - name: INIT_DATASOURCE
   value: "true"
-- name: INFLUXDB_URL
-  value: "https://influxdb-continuous-infra.apps.ci.centos.org"
+- name: INFLUXDB_ROUTE
+  value: "{{ influxdb_api_route }}"
 - name: INFLUXDB_PASSWORD
-  value: contra
+  value: "{{ influxdb_admin_password }}"
 - name: INFLUXDB_USER
-  value: contra
+  value: "{{ influxdb_admin_user }}"
 objects:
 - apiVersion: v1
   kind: ImageStream
@@ -175,8 +179,8 @@ objects:
             value: "Main Org."
           - name: GF_AUTH_ANONYMOUS_ORG_ROLE
             value: Viewer
-          - name: INFLUXDB_URL
-            value: "${INFLUXDB_URL}"
+          - name: INFLUXDB_ROUTE
+            value: "${INFLUXDB_ROUTE}"
           - name: INFLUXDB_USER
             value: "${INFLUXDB_USER}"
           - name: INFLUXDB_PASSWORD
