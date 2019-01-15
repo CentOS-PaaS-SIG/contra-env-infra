@@ -420,7 +420,7 @@
       "targets": [
         {
           "groupBy": [],
-          "measurement": "demo_metricsPipelineJob",
+          "measurement": "metricsPipelineJob",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -529,7 +529,7 @@
       "targets": [
         {
           "groupBy": [],
-          "measurement": "demo_metricsPipelineJob",
+          "measurement": "metricsPipelineJob",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -638,7 +638,7 @@
       "targets": [
         {
           "groupBy": [],
-          "measurement": "demo_metricsPipelineJob",
+          "measurement": "metricsPipelineJob",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -845,7 +845,7 @@
               "type": "tag"
             }
           ],
-          "measurement": "demo_metricsPipelineJob",
+          "measurement": "metricsPipelineJob",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -966,7 +966,7 @@
               "type": "tag"
             }
           ],
-          "measurement": "demo_metricsPipelineJob",
+          "measurement": "metricsPipelineJob",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
