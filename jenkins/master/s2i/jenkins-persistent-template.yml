@@ -308,7 +308,7 @@ parameters:
 - name: INFLUXDB_ROUTE
   displayName: Influxdb route
   description: The http api for Influxdb
-  value: "{{ influxdb_api_url }}"
+  value: "{{ influxdb_api_route }}"
 - name: INFLUXDB_USERNAME
   displayName: Influxdb username
   description: The username to auth to influxdb

@@ -46,8 +46,8 @@ parameters:
   value: "true"
 - name: INIT_DATASOURCE
   value: "true"
-- name: INFLUXDB_URL
-  value: "{{ influxdb_api_url }}"
+- name: INFLUXDB_ROUTE
+  value: "{{ influxdb_api_route }}"
 - name: INFLUXDB_PASSWORD
   value: "{{ influxdb_admin_password }}"
 - name: INFLUXDB_USER
@@ -179,8 +179,8 @@ objects:
             value: "Main Org."
           - name: GF_AUTH_ANONYMOUS_ORG_ROLE
             value: Viewer
-          - name: INFLUXDB_URL
-            value: "${INFLUXDB_URL}"
+          - name: INFLUXDB_ROUTE
+            value: "${INFLUXDB_ROUTE}"
           - name: INFLUXDB_USER
             value: "${INFLUXDB_USER}"
           - name: INFLUXDB_PASSWORD

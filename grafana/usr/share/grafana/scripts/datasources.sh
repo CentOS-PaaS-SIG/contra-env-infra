@@ -24,7 +24,7 @@ datasources:
   # <int> org id. will default to orgId 1 if not specified
   orgId: 1
   # <string> url
-  url: $INFLUXDB_URL
+  url: "http://${INFLUXDB_ROUTE}"
   # <string> database password, if used
   password: $INFLUXDB_PASSWORD
   # <string> database user, if used
