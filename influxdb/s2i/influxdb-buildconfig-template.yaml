@@ -30,7 +30,7 @@ parameters:
   value: influxdb-1.6.2.x86_64.rpm
   description: The influx rpm
 - name: INFLUXDB_ADMIN_USER
-  value: contra
+  value: "{{ influxdb_admin_user }}"
   description: The influxdb admin user
 - name: INFLUXDB_ADMIN_PASSWORD
   value: "{{ influxdb_admin_password }}"
