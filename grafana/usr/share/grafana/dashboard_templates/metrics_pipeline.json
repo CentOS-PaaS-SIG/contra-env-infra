@@ -27,7 +27,7 @@
         "#508642",
         "#d44a3a"
       ],
-      "datasource": "influxdb",
+      "datasource": "Influxdb",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -137,7 +137,7 @@
         "#bf1b00",
         "#bf1b00"
       ],
-      "datasource": "influxdb",
+      "datasource": "Influxdb",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -252,7 +252,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "influxdb",
+      "datasource": "Influxdb",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -361,7 +361,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#299c46"
       ],
-      "datasource": "influxdb",
+      "datasource": "Influxdb",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -470,7 +470,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#299c46"
       ],
-      "datasource": "influxdb",
+      "datasource": "Influxdb",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -579,7 +579,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#299c46"
       ],
-      "datasource": "influxdb",
+      "datasource": "Influxdb",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -684,7 +684,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "influxdb",
+      "datasource": "Influxdb",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -796,7 +796,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "influxdb",
+      "datasource": "Influxdb",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -923,7 +923,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "influxdb",
+      "datasource": "Influxdb",
       "fill": 1,
       "gridPos": {
         "h": 9,
