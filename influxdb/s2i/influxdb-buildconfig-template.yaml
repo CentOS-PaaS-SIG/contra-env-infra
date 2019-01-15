@@ -69,8 +69,7 @@ objects:
       sourceStrategy:
         from:
           kind: DockerImage
-          name: 172.30.1.1:5000/contra-sample-project/influxdb:latest
-        env:
+          name: docker.io/contrainfra/influxdb:latest
           - name: INFLUXDB_BINARY
             value: ${INFLUXDB_BINARY}
       type: Source

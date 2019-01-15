@@ -76,7 +76,7 @@ objects:
       sourceStrategy:
         from:
           kind: DockerImage
-          name: 172.30.1.1:5000/contra-sample-project/grafana:latest
+          name: docker.io/contrainfra/grafana:latest
         env:
           - name: GRAFANA_INSTALL
             value: ${GRAFANA_INSTALL}
