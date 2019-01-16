@@ -251,11 +251,11 @@ objects:
 parameters:
 - description: Git source URI for Jenkins S2I. E.g. https://github.com/CentOS-PaaS-SIG/contra-env-infra
   name: REPO_URL
-  value: "{{ project_repo }}"
+  value: https://github.com/CentOS-PaaS-SIG/contra-env-infra
   required: true
 - description: Git branch/tag reference
   name: REPO_REF
-  value: "{{ project_branch }}"
+  value: master
 - description: Path within Git project to build; empty for root project directory.
   name: CONTEXT_DIR
   value: jenkins/master/openshift
