@@ -164,7 +164,7 @@ objects:
           - name: GF_LOG_MODE
             value: console
           - name: GF_SECURITY_ADMIN_USER
-            value: root
+            value: "${ADMIN_USER}"
           - name: GF_SECURITY_ADMIN_PASSWORD
             value: "${ADMIN_PASSWORD}"
           - name: GF_PATHS_PLUGINS

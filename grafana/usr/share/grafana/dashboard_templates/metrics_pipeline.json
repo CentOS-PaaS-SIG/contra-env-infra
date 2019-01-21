@@ -45,12 +45,6 @@
       "id": 7,
       "interval": null,
       "links": [
-        {
-          "includeVars": true,
-          "title": "Upstream Fedora Pipeline",
-          "type": "absolute",
-          "url": "https://jenkins-continuous-infra.apps.ci.centos.org/view/Fedora%20All%20Packages%20Pipeline/"
-        }
       ],
       "mappingType": 1,
       "mappingTypes": [
@@ -155,11 +149,6 @@
       "id": 8,
       "interval": null,
       "links": [
-        {
-          "title": "Upstream Fedora Pipeline",
-          "type": "absolute",
-          "url": "https://jenkins-continuous-infra.apps.ci.centos.org/view/Fedora%20All%20Packages%20Pipeline/"
-        }
       ],
       "mappingType": 1,
       "mappingTypes": [
@@ -270,11 +259,6 @@
       "id": 11,
       "interval": null,
       "links": [
-        {
-          "title": "Upstream Fedora Pipeline",
-          "type": "absolute",
-          "url": "https://jenkins-continuous-infra.apps.ci.centos.org/view/Fedora%20All%20Packages%20Pipeline/"
-        }
       ],
       "mappingType": 1,
       "mappingTypes": [
@@ -379,11 +363,6 @@
       "id": 17,
       "interval": null,
       "links": [
-        {
-          "title": "Upstream Fedora Pipeline",
-          "type": "absolute",
-          "url": "https://jenkins-continuous-infra.apps.ci.centos.org/view/Fedora%20All%20Packages%20Pipeline/"
-        }
       ],
       "mappingType": 1,
       "mappingTypes": [
@@ -488,11 +467,6 @@
       "id": 18,
       "interval": null,
       "links": [
-        {
-          "title": "Upstream Fedora Pipeline",
-          "type": "absolute",
-          "url": "https://jenkins-continuous-infra.apps.ci.centos.org/view/Fedora%20All%20Packages%20Pipeline/"
-        }
       ],
       "mappingType": 1,
       "mappingTypes": [
@@ -597,11 +571,6 @@
       "id": 19,
       "interval": null,
       "links": [
-        {
-          "title": "Upstream Fedora Pipeline",
-          "type": "absolute",
-          "url": "https://jenkins-continuous-infra.apps.ci.centos.org/view/Fedora%20All%20Packages%20Pipeline/"
-        }
       ],
       "mappingType": 1,
       "mappingTypes": [
@@ -1033,7 +1002,7 @@
     "list": []
   },
   "time": {
-    "from": "now-3d",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {
