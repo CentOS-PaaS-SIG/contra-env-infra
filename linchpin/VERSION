@@ -1,1 +1,3 @@
-v1.6.5
+v1.6.5                      
+
+# adjust here as well to maintain evenness: https://github.com/CentOS-PaaS-SIG/contra-env-infra/blob/master/linchpin/Dockerfile#L4
