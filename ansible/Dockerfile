@@ -2,7 +2,7 @@ FROM fedora:28
 
 LABEL name="contrainfra/ansible-executor" \
       maintainer="rnester@redhat.com, cmays@redhat.com, ari@redhat.com" \
-      version="0.0.5" \
+      version="1.1.5" \
       description="A container to run test scripts, set resource configuration, etc."
 
 ENV APP_ROOT=/ansible/
