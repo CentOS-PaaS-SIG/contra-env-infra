@@ -5,3 +5,8 @@ COPY --chown=1001:0 ./openshift /opt/openshift
 RUN /usr/local/bin/install-plugins.sh /opt/openshift/plugins.txt && \
     mv /opt/openshift/plugins.txt /opt/openshift/contra-plugins.txt
 
+USER 0
+RUN yum install epel-release -y && \
+    yum install jq -y
+USER 1001
+
