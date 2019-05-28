@@ -2,7 +2,7 @@
 
 
 # create shared library configs from project and helper repos
-openshift_lib_dir=opt/openshift/configuration/init.groovy.d/sharedLibConfigs
+openshift_lib_dir=/opt/openshift/configuration/init.groovy.d/sharedLibConfigs
 
 # $1 - the repo url
 # $2 - the branch to use
