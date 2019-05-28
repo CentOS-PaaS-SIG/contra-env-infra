@@ -2,18 +2,18 @@
 
 
 # create shared library configs from project and helper repos
-openshift_lib_dir=/opt/openshift/configuration/init.groovy.d/sharedLibConfigs
+openshift_lib_dir=opt/openshift/configuration/init.groovy.d/sharedLibConfigs
 
-# $1 - the name of the shared library
-# $2 - the repo url
-# $3 - the branch to use
+# $1 - the repo url
+# $2 - the branch to use
 create_library_config() {
-    local config_name=$(parse_repo $2)
+    local config_name=$(parse_repo $1)
+    local repo_name="$(cut -d'-' -f2 <<<${config_name})"
     cat > "${openshift_lib_dir}/${config_name}.json" <<- EOF
 {
-  "name": "$1",
-  "url": "$2",
-  "branch": "$3",
+  "name": "$repo_name",
+  "url": "$1",
+  "branch": "$2",
   "implicit": true
 }
 EOF
