@@ -29,7 +29,7 @@ def testContainer(Map optional = [:], String imageName) {
                        jenkins_slave_image: 'jenkins-contra-slave']
 
     deployOpenShiftTemplate(podTemplate) {
-        ciPipeline(decorateBuild: decoratePRBuild()) {
+        ciPipeline(decorateBuild: decoratePRBuild(), sendMetrics: false) {
 
             buildTestContainer(
                     image_name: imageName,
