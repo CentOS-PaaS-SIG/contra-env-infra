@@ -2,18 +2,25 @@
 
 @Library('contra-lib') _
 
+def getVersions(String versionFile) {
+    def versions = null
+    if (changeset(versionFile)) {
+        def version = readFile file: versionFile
+        versions = ['latest', version.trim()]
+    } else {
+        versions = ['latest']
+    }  
+
+    return versions
+}
 
 def testContainer(Map optional = [:], String imageName) {
     def buildRoot = optional.buildRoot ?: imageName
 
     def versions = null
     if (env.BRANCH_NAME == 'master') {
-        if (changeset("${buildRoot}/VERSION")) {
-            def version = readFile file: "${buildRoot}/VERSION"
-            versions = ['latest', version.trim()]
-        } else {
-            versions = ['latest']
-        }
+        // buildah push to docker hub is breaking things. Disabling until a fix is in place
+        //versions = getVersions("${buildRoot}/VERSION")
     }
 
     def credentials = [usernamePassword(credentialsId: 'continuous-infra-contrainfra-dockercreds',
