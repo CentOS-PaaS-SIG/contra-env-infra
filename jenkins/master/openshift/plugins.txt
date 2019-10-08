@@ -39,7 +39,7 @@ icon-shim:2.0.3
 influxdb:1.20
 instant-messaging:1.35
 ircbot:2.30
-jackson2-api:2.8.11.3
+jackson2-api
 javadoc:1.4
 jdk-tool:1.1
 jenkins-design-language:1.10.2
@@ -85,7 +85,6 @@ resource-disposer:0.12
 run-condition:1.2
 scm-api:2.2.7
 script-security:1.50
-sse-gateway:1.15
 ssh-credentials:1.14
 ssh-slaves:1.28
 subversion:2.11.1
