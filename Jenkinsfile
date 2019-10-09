@@ -19,8 +19,7 @@ def testContainer(Map optional = [:], String imageName) {
 
     def versions = null
     if (env.BRANCH_NAME == 'master') {
-        // buildah push to docker hub is breaking things. Disabling until a fix is in place
-        //versions = getVersions("${buildRoot}/VERSION")
+        versions = getVersions("${buildRoot}/VERSION")
     }
 
     def credentials = [usernamePassword(credentialsId: 'continuous-infra-contrainfra-dockercreds',
