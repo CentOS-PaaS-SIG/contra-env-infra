@@ -16,15 +16,12 @@ logger.info("Enable Slave -> Master Access Control")
 Jenkins.instance.injector.getInstance(AdminWhitelistRule.class).setMasterKillSwitch(false)
 // Set global read permission
 def strategy = Jenkins.instance.getAuthorizationStrategy()
-strategy.add(hudson.model.Hudson.READ,'anonymous')
+strategy.add(hudson.model.Item.READ,'anonymous')
 // users with URL will be presented with login screen
 strategy.add(hudson.model.Item.DISCOVER,'anonymous')
 Jenkins.instance.setAuthorizationStrategy(strategy)
 // Set Markup Formatter to Safe HTML so PR hyperlinks work
 Jenkins.instance.setMarkupFormatter(new RawHtmlMarkupFormatter(false))
-
-logger.info("Enabling CSRF Protection")
-Jenkins.instance.setCrumbIssuer(new DefaultCrumbIssuer(true))
 
 logger.info("Disabling deprecated agent protocols (only JNLP4 is enabled)")
 Set<String> agentProtocolsList = ['JNLP4-connect']
