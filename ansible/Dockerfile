@@ -1,9 +1,13 @@
-FROM fedora:28
+FROM fedora:30
 
-LABEL name="contrainfra/ansible-executor" \
-      maintainer="rnester@redhat.com, cmays@redhat.com, ari@redhat.com" \
-      version="1.1.5" \
-      description="A container to run test scripts, set resource configuration, etc."
+LABEL name="ansible-executor" \
+      maintainer="rnester@redhat.com, ari@redhat.com" \
+      version="v1.2.0" \
+      description="A container to run test scripts, set resource configuration, etc." \
+      k8s.io.display-name="ansible-executor" \
+      k8s.io.description="Container to help build containers" \
+      openshift.io.tags="cpaas, ansible-executor"
+
 
 ENV APP_ROOT=/ansible/
 ENV PATH=${APP_ROOT}/bin:${PATH} HOME=${APP_ROOT}
@@ -15,13 +19,13 @@ RUN dnf install -y ansible \
         fedpkg \
         libselinux-python \
         standard-test-roles \
-        python-boto \
-        python-boto3 \
+        python2-boto \
         python3-boto \
         python3-boto3 \
         python2-libcloud \
         python3-libcloud \
 	    python2-virtualenv \
+	    python3-virtualenv \
         dumb-init \
         rsync && \
     dnf clean all && \

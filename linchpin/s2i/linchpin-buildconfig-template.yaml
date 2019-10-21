@@ -24,13 +24,10 @@ objects:
     name: "linchpin-executor"
   spec:
     triggers:
-    - type: ConfigChange
+      - type: ConfigChange
     source:
-      contextDir: ${REPO_CONTEXTDIR}
-      git:
-        ref: ${REPO_REF}
-        uri: ${REPO_URL}
-      type: Git
+      type: DockerFile
+      dockerfile: "FROM cquay.io/cpaas/linchpin:v1.7.2"
     strategy:
       dockerStrategy:
         env:
@@ -38,21 +35,9 @@ objects:
             value: linchpin-executor
           - name: GIT_SSL_NO_VERIFY
             value: 'true'
+        noCache: true
       type: Docker
     output:
       to:
         kind: ImageStreamTag
         name: linchpin-executor:latest
-parameters:
-- description: Git repository with Dockerfile and slave entrypoint.
-  displayName: Repostory URL
-  name: REPO_URL
-  value: https://github.com/CentOS-PaaS-SIG/contra-env-sample-project.git
-- description: The subdirectory inside the repo, containing the Dockerfile
-  displayName: Context Directory
-  name: REPO_CONTEXTDIR
-  value: config/dockerfiles/linchpin
-- description: The git ref or tag to use for customization.
-  displayName: Git Reference
-  name: REPO_REF
-  value: master
