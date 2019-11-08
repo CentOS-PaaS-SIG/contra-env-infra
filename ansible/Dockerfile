@@ -24,11 +24,11 @@ RUN dnf install -y ansible \
         python3-boto3 \
         python3-crypto \
         python2-google-auth \
-        python3-google-auth
+        python3-google-auth \
         python2-libcloud \
         python3-libcloud \
-	    python2-virtualenv \
-	    python3-virtualenv \
+	python2-virtualenv \
+	python3-virtualenv \
         dumb-init \
         rsync && \
     dnf clean all && \
