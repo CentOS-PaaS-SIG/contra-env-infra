@@ -27,7 +27,7 @@ objects:
       - type: ConfigChange
     source:
       type: DockerFile
-      dockerfile: "FROM cquay.io/cpaas/linchpin:v1.7.2"
+      dockerfile: "FROM quay.io/cpaas/linchpin:v1.7.2"
     strategy:
       dockerStrategy:
         env:
