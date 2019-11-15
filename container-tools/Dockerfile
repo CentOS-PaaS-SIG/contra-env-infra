@@ -16,7 +16,7 @@ COPY libpod.conf /etc/containers/libpod.conf
 
 ADD ./bin /bin
 
-USER 1001
+USER 10001
 
 ENTRYPOINT ["/usr/bin/dumb-init", "--", "uid_entrypoint"]
 
