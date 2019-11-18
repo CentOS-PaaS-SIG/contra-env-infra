@@ -30,6 +30,7 @@ def testContainer(Map optional = [:], String imageName) {
     def containers = ['container-tools': ['tag': 'latest']]
 
     def podTemplate = [containersWithProps: containers,
+                       privileged: false,
                        docker_repo_url: '172.30.254.79:5000',
                        openshift_namespace: 'continuous-infra',
                        podName: 'container-builds',
