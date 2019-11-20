@@ -13,7 +13,7 @@ objects:
     annotations:
       description: "A container used to execute linchpin commands"
       openshift.io/display-name: "Linchpin Executor (Ephemeral)"
-      iconClass: linchpin
+      iconClass: icon-shadowman
       tags: "linchpin"
       openshift.io/provider-display-name: "Red Hat, Inc."
   spec: {}
