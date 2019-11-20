@@ -1,5 +1,5 @@
 
-IMAGE_NAME = container-buildah
+IMAGE_NAME = c-tools
 CONTAINER_NAME = $(IMAGE_NAME)-test
 
 USERNAME ?= dummy_username
@@ -22,4 +22,9 @@ push:
 	buildah tag localhost/$(IMAGE_NAME)-candidate:latest localhost/$(IMAGE_NAME)-candidate:$(VERSION)
 	buildah push --creds $(USERNAME)\:$(PASSWORD) localhost/$(IMAGE_NAME)-candidate\:$(VERSION) \
     $(CONTAINER_REGISTRY)/$(CONTAINER_NAMESPACE)/$(IMAGE_NAME)\:$(VERSION)
+
+.PHONY: clean
+clean:
+	podman rm --force $(CONTAINER_NAME)\
+    buildah rmi --force $(IMAGE_NAME)
 

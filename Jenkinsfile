@@ -27,7 +27,7 @@ def testContainer(Map optional = [:], String imageName) {
                         usernameVariable: 'CONTAINER_USERNAME',
                         passwordVariable: 'CONTAINER_PASSWORD')]
 
-    def containers = ['container-buildah': ['tag': 'latest']]
+    def containers = ['c-tools': ['tag': 'latest']]
 
     def podTemplate = [containersWithProps: containers,
                        privileged: false,
@@ -44,7 +44,7 @@ def testContainer(Map optional = [:], String imageName) {
                     build_root: buildRoot,
                     container_namespace: 'contrainfra',
                     credentials: credentials,
-                    buildContainer: 'container-buildah',
+                    buildContainer: 'c-tools',
                     versions: versions)
 
         }
@@ -176,18 +176,18 @@ pipeline {
                         }
                     }
                 }
-                stage('container-buildah') {
+                stage('c-tools') {
                     when {
                         anyOf {
                             expression {
-                                gitChangeLog("container-buildah/**")
+                                gitChangeLog("c-tools/**")
                             }
-                            changeset "container-buildah/**"
+                            changeset "c-tools/**"
                         }
                     }
                     steps {
                         script {
-                            testContainer('container-buildah')
+                            testContainer('c-tools')
                         }
                     }
                 }
