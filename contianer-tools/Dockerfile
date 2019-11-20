@@ -1,14 +1,14 @@
 FROM fedora:30
 
-LABEL name="c-tools" \
+LABEL name="container-tools" \
       maintainer="rnester@redhat.com, ari@redhat.com" \
       version="v1.1.0" \
       description="Container to help build containers" \
-      k8s.io.display-name="c-tools" \
+      k8s.io.display-name="container-tools" \
       k8s.io.description="Container to help build containers" \
-      openshift.io.tags="cpaas, c-tools"
+      openshift.io.tags="cpaas, container-tools"
 
-ENV APP_ROOT=/c-tools/
+ENV APP_ROOT=/container-tools/
 ENV PATH=${APP_ROOT}/bin:${PATH} HOME=${APP_ROOT}
 COPY bin/ ${APP_ROOT}/bin/
 

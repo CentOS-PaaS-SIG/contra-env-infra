@@ -1,5 +1,5 @@
 
-IMAGE_NAME = c-tools
+IMAGE_NAME = container-tools
 CONTAINER_NAME = $(IMAGE_NAME)-test
 
 USERNAME ?= dummy_username
