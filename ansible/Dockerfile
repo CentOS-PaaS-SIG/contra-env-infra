@@ -28,6 +28,7 @@ RUN dnf install -y ansible \
         python3-libcloud \
 	python2-virtualenv \
 	python3-virtualenv \
+	    jq \
         dumb-init \
         rsync && \
     dnf clean all && \
