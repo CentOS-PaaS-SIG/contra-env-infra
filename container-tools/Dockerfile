@@ -8,6 +8,7 @@ LABEL name="container-tools" \
       k8s.io.description="Container to help build containers" \
       openshift.io.tags="cpaas, container-tools"
 
+ENV STORAGE_DRIVER=vfs
 ENV APP_ROOT=/container-tools/
 ENV PATH=${APP_ROOT}/bin:${PATH} HOME=${APP_ROOT}
 COPY bin/ ${APP_ROOT}/bin/
