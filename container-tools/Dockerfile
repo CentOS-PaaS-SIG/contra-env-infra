@@ -2,7 +2,7 @@ FROM fedora:30
 
 LABEL name="container-tools" \
       maintainer="rnester@redhat.com, ari@redhat.com" \
-      version="v1.1.0" \
+      version="v1.2.0" \
       description="Container to help build containers" \
       k8s.io.display-name="container-tools" \
       k8s.io.description="Container to help build containers" \
@@ -12,7 +12,7 @@ ENV APP_ROOT=/container-tools/
 ENV PATH=${APP_ROOT}/bin:${PATH} HOME=${APP_ROOT}
 COPY bin/ ${APP_ROOT}/bin/
 
-RUN dnf install -y buildah make podman dumb-init procps && \
+RUN dnf install -y ansible buildah make podman dumb-init procps jq && \
     dnf clean all && \
     mkdir -p ${APP_ROOT} && \
     chmod -R u+x ${APP_ROOT}/bin && \

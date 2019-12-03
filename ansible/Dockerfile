@@ -2,7 +2,7 @@ FROM fedora:30
 
 LABEL name="ansible-executor" \
       maintainer="rnester@redhat.com, ari@redhat.com" \
-      version="v1.2.0" \
+      version="v1.2.1" \
       description="A container to run test scripts, set resource configuration, etc." \
       k8s.io.display-name="ansible-executor" \
       k8s.io.description="Container to help build containers" \
