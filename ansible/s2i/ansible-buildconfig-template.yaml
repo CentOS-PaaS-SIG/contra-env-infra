@@ -13,7 +13,7 @@ objects:
     annotations:
       description: "A container used to execute ansible commands"
       openshift.io/display-name: "Anisble Executor (Ephemeral)"
-      iconClass: ansible
+      iconClass: icon-ansible
       tags: "ansible"
       openshift.io/provider-display-name: "Red Hat, Inc."
   spec: {}

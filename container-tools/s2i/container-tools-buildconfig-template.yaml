@@ -13,7 +13,7 @@ objects:
     annotations:
       description: "A container used to execute container commands"
       openshift.io/display-name: "Container command Executor (Ephemeral)"
-      iconClass: container-tools
+      iconClass: icon-shadowman
       tags: "container-tools"
       openshift.io/provider-display-name: "Red Hat, Inc."
   spec: {}
